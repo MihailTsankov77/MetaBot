@@ -21,5 +21,4 @@ class Gear:
         self.rect = new_rect
 
     def draw(self):
-        self.rotate(2)
         self.screen.blit(self.image, self.rect)

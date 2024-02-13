@@ -1,7 +1,6 @@
 import pygame
 import sys
-from images.image_loader.images import Images
-from Objects.Gear import Gear
+from component.Gear.GearButton import GearButton
 
 pygame.init()
 
@@ -14,7 +13,7 @@ def main(screen):
     clock = pygame.time.Clock()
 
 
-    gear = Gear(screen, (100, 100), (100, 100))
+    gear = GearButton(screen, (100, 100), (100, 100), lambda: print("Clicked"))
 
     while True:
         clock.tick(FPS)
