@@ -1,6 +1,7 @@
 import pygame
 import sys
 from component.Gear.GearButton import GearButton
+from component.Gear.GearMouse import GearMouse
 
 pygame.init()
 
@@ -8,27 +9,31 @@ SCREEN_DIMENSIONS = (1200, 896)
 BG = (0, 0, 0)
 FPS = 60
 
+class Main:
+    def __init__(self, screen):
+        self.mouse = GearMouse.get_instance(screen)
 
-def main(screen):
-    clock = pygame.time.Clock()
+        self.gear = GearButton(screen, 100, (100, 100), lambda: print("Clicked"))
 
+    def __call__(self):
+        clock = pygame.time.Clock()
 
-    gear = GearButton(screen, (100, 100), (100, 100), lambda: print("Clicked"))
+        while True:
+            clock.tick(FPS)
+            screen.fill(BG)
+            self.gear.draw()
 
-    while True:
-        clock.tick(FPS)
-        screen.fill(BG)
-        gear.draw()
+            if any(event.type == pygame.QUIT
+                for event in pygame.event.get()):
+                break
 
-        if any(event.type == pygame.QUIT
-            for event in pygame.event.get()):
-            break
-        pygame.display.update()
+            self.mouse.draw()
+            pygame.display.update()
 
 
 if __name__ == '__main__':
     screen = pygame.display.set_mode(SCREEN_DIMENSIONS)
     pygame.display.set_caption('MetaBot')
-    main(screen)
+    Main(screen)()
     pygame.quit()
     sys.exit(0)
