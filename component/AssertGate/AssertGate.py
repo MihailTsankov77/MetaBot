@@ -3,7 +3,7 @@ import pygame
 from consts.game import FPS, GATE_SIZE, TILE_SIZE, TILE_COLUMN_COUNT
 from images.image_loader.images import Images
 from utils.coordinates import get_coordinates_from_grid
-
+from utils.collision import are_colliding
 
 class AssertGate:
     size = (GATE_SIZE, GATE_SIZE)
@@ -48,13 +48,7 @@ class AssertGate:
 
     @property
     def is_colliding_with_player(self):
-        if self.tile[1] != self.player.tile[1]:
-            return False
-
-        if self.tile[0] >= self.player.tile[0] - 0.5 and self.tile[0] <= self.player.tile[0] + 0.5:
-            return True
-    
-        return False
+        return are_colliding(self.rect, self.player.rect)
 
     def draw(self):
         self.screen.blit(self.image, self.rect)
