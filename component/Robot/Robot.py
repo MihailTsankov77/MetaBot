@@ -7,7 +7,7 @@ from utils.coordinates import get_coordinates_from_grid
 class Robot:
     number_of_frames = 17
     standing_animation_speed = 3
-    walking_animation_speed = 2
+    walking_animation_speed = 1
     animation_speed = standing_animation_speed
     animation_timer = 1
 
@@ -27,7 +27,7 @@ class Robot:
         self.rect.topleft = self.coordinates
 
         self.current_frame = 0
-        self.future_position = 0
+        self.future_position = self.rect.x
 
     @staticmethod
     def get_coordinates(tile):
@@ -49,14 +49,15 @@ class Robot:
 
     def move_tile(self):
         self.future_position = self.rect.x + TILE_SIZE
+        self.tile = (self.tile[0] + 1, self.tile[1])
 
     def draw(self):
         self.animate()
         self.screen.blit(self.frames[self.current_frame], self.rect)
 
         if self.rect.x >= self.future_position:
-            self.rect.x = self.future_position
             self.animation_speed = self.standing_animation_speed
             self.future_position = self.rect.x
+            self.rect.topleft = self.coordinates
         else:
             self.move()

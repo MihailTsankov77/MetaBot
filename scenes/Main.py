@@ -20,13 +20,14 @@ class Main:
         self.manager = UI_manager 
 
        
-        self.robot = Robot(screen)
+        self.robot = Robot(screen, tile=(7.3, 2))
 
         self.grid = Grid(screen)
 
         self.assertGate = AssertGate(screen, 
                                      self.robot, 
                                      lambda robot: True, 
+                                     tile=(8, 2),
                                      on_fail=lambda: print("Fail"), 
                                      on_pass=lambda: print("Pass")
                                      )

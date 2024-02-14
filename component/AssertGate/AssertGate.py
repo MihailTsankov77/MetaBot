@@ -9,8 +9,6 @@ class AssertGate:
     size = (GATE_SIZE, GATE_SIZE)
     timer = FPS * 3
 
-    show_hitbox = False
-
     def __init__(self, screen, player, check_condition, tile = (TILE_COLUMN_COUNT -1, 2), on_fail=None, on_pass=None):
         self.screen = screen
         self.check_condition = check_condition
@@ -23,12 +21,7 @@ class AssertGate:
 
         self.tile = tile
     
-        self.rect.topleft = self.coordinates
-
-        hitbox_size = (TILE_SIZE, GATE_SIZE)
-        self.hitbox = pygame.Rect(0, 0, *hitbox_size)
-        self.hitbox.center = self.rect.center
-        
+        self.rect.topleft = self.coordinates        
 
         self.current_timer = 0
         self.checked = False
@@ -53,13 +46,22 @@ class AssertGate:
             else:
                 self.on_fail()
 
+    @property
+    def is_colliding_with_player(self):
+        if self.tile[1] != self.player.tile[1]:
+            return False
+
+        if self.tile[0] >= self.player.tile[0] - 0.5 and self.tile[0] <= self.player.tile[0] + 0.5:
+            return True
+    
+        return False
+
     def draw(self):
         self.screen.blit(self.image, self.rect)
 
-        if self.show_hitbox:
-            pygame.draw.rect(self.screen, (255, 0, 0), self.hitbox, 2)
+        
 
-        if self.hitbox.colliderect(self.player.rect):
+        if self.is_colliding_with_player:
             self.wait_for_condition()
         else:
             self.current_timer = 0
