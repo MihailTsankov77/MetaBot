@@ -14,7 +14,11 @@ class Images_Loader:
             "rows": 4,
             "columns": 5,
             "all_frames": 17
-        }
+        },
+        "Gate":{
+            "asset": "gate.png",
+            "is_image": True
+        },
     }
     def __init__(self):
        for name, config in self.assets.items():
