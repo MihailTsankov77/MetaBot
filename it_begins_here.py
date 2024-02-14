@@ -3,10 +3,10 @@ import pygame_gui
 import sys
 
 from scenes.Main import Main
+from consts.game import SCREEN_DIMENSIONS
 
 pygame.init()
 
-SCREEN_DIMENSIONS = (1200, 896)
 
 if __name__ == '__main__':
     screen = pygame.display.set_mode(SCREEN_DIMENSIONS)
