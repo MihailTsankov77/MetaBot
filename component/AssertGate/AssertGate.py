@@ -1,16 +1,17 @@
 import pygame
 
-from consts.game import FPS, GATE_SIZE, TILE_SIZE
+from consts.game import FPS, GATE_SIZE, TILE_SIZE, TILE_COLUMN_COUNT
 from images.image_loader.images import Images
+from utils.coordinates import get_coordinates_from_grid
 
 
 class AssertGate:
     size = (GATE_SIZE, GATE_SIZE)
     timer = FPS * 3
 
-    show_hitbox = True
+    show_hitbox = False
 
-    def __init__(self, screen, position, player, check_condition, on_fail=None, on_pass=None):
+    def __init__(self, screen, player, check_condition, tile = (TILE_COLUMN_COUNT -1, 2), on_fail=None, on_pass=None):
         self.screen = screen
         self.check_condition = check_condition
         self.on_fail = on_fail
@@ -19,7 +20,10 @@ class AssertGate:
 
         self.image =  pygame.transform.scale(Images.Gate, self.size)
         self.rect = self.image.get_rect()
-        self.rect.topleft = position
+
+        self.tile = tile
+    
+        self.rect.topleft = self.coordinates
 
         hitbox_size = (TILE_SIZE, GATE_SIZE)
         self.hitbox = pygame.Rect(0, 0, *hitbox_size)
@@ -28,6 +32,14 @@ class AssertGate:
 
         self.current_timer = 0
         self.checked = False
+    
+    @staticmethod
+    def get_coordinates(tile):
+        return get_coordinates_from_grid(tile, TILE_SIZE, (-GATE_SIZE / 10, -GATE_SIZE / 5))
+
+    @property
+    def coordinates(self):
+        return  AssertGate.get_coordinates(self.tile)
 
     def wait_for_condition(self):
         if self.checked:

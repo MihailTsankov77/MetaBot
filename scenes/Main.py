@@ -25,7 +25,6 @@ class Main:
         self.grid = Grid(screen)
 
         self.assertGate = AssertGate(screen, 
-                                     (200, 300), 
                                      self.robot, 
                                      lambda robot: True, 
                                      on_fail=lambda: print("Fail"), 
