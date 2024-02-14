@@ -20,7 +20,7 @@ class Main:
         self.manager = UI_manager 
 
        
-        self.robot = Robot(screen, (200, 300))
+        self.robot = Robot(screen)
 
         self.grid = Grid(screen)
 
