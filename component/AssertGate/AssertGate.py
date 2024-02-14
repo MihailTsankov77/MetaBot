@@ -1,14 +1,14 @@
 import pygame
 
-from consts.game import FPS
+from consts.game import FPS, GATE_SIZE
 from images.image_loader.images import Images
 
 
 class AssertGate:
-    size = (300, 300)
+    size = (GATE_SIZE, GATE_SIZE)
     timer = FPS * 3
 
-    show_hitbox = False
+    show_hitbox = True
 
     def __init__(self, screen, position, player, check_condition, on_fail=None, on_pass=None):
         self.screen = screen
@@ -19,10 +19,9 @@ class AssertGate:
 
         self.image =  pygame.transform.scale(Images.Gate, self.size)
         self.rect = self.image.get_rect()
-        self.rect.center = position
+        self.rect.topleft = position
 
         self.hitbox = pygame.Rect(self.rect.x, self.rect.y, self.rect.width / 3, self.rect.height / 1.5)
-        #  position is for bottom center of the rectage
         self.hitbox.center = position
         
 

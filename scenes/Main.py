@@ -1,14 +1,16 @@
 import pygame
 
+from consts.game import FPS
 from component.Gear.GearButton import GearButton
 from component.Gear.GearMouse import GearMouse
 from component.Robot.Robot import Robot
-from consts.game import FPS
 from component.AssertGate.AssertGate import AssertGate
+from component.base.Grid import Grid
 
 pygame.init()
 
 BG = (255, 255, 255)
+
 
 
 class Main:
@@ -18,10 +20,12 @@ class Main:
         self.manager = UI_manager 
 
        
-        self.robot = Robot(screen, (200, 200))
+        self.robot = Robot(screen, (200, 300))
+
+        self.grid = Grid(screen)
 
         self.assertGate = AssertGate(screen, 
-                                     (300, 200), 
+                                     (200, 300), 
                                      self.robot, 
                                      lambda robot: True, 
                                      on_fail=lambda: print("Fail"), 
@@ -42,6 +46,8 @@ class Main:
 
             self.screen.fill(BG)
 
+
+            self.grid.draw()
 
             self.gear.draw()
           
