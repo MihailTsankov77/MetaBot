@@ -1,8 +1,8 @@
 
 
 def are_colliding(a, b):
-    ax, ay = a
-    bx, by = b
+    ax, ay, *_ = a
+    bx, by, *_ = b
      
     if ay != by:
         return False

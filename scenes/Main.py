@@ -6,6 +6,7 @@ from component.Gear.GearMouse import GearMouse
 from component.Robot.Robot import Robot
 from component.AssertGate.AssertGate import AssertGate
 from component.base.Grid import Grid
+from component.base.TextArea import TextArea
 
 pygame.init()
 
@@ -34,6 +35,8 @@ class Main:
 
         self.gear = GearButton(screen, 100, (100, 100), lambda: self.robot.move_tile())
 
+        self.textarea = TextArea(screen)
+
     def __call__(self):
         clock = pygame.time.Clock()
 
@@ -41,6 +44,7 @@ class Main:
             time_delta = clock.tick(FPS)/1000.0
 
             for event in pygame.event.get():
+                self.textarea.handle_input(event)
                 if event.type == pygame.QUIT:
                     return
 
@@ -50,6 +54,8 @@ class Main:
             self.grid.draw()
 
             self.gear.draw()
+
+            self.textarea.draw()
           
             self.assertGate.draw()
 
