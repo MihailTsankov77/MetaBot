@@ -4,11 +4,12 @@ import pygame
 class TextArea:
     font_size = 20
     font_family = 'arial'
-    text_color = (0, 0, 0)
+    back_ground = (34, 40, 44)
+    text_color = (255, 255, 255)
     padding_horizontal = 10
 
     show_cursor = True
-    show_border = True
+    show_background = True
 
     def __init__(self, screen, position, size):
         self.screen = screen
@@ -41,7 +42,8 @@ class TextArea:
         self.screen.blit(text_surface, position)
         
     def draw(self):
-        if self.show_border:
+        if self.show_background:
+            pygame.draw.rect(self.screen, self.back_ground, self.rect)
             pygame.draw.rect(self.screen, self.text_color, self.rect, 2)
 
         for i, row in enumerate(self.rows):
