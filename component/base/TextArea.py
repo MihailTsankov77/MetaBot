@@ -24,6 +24,9 @@ class TextArea:
                     if len(self.rows) > 1:
                         self.rows = self.rows[:-1]
     
+    def get_text(self):
+        return '\n'.join(self.rows)
+    
     def draw_text(self, text, position):
         text_surface = self.font.render(text, True, self.text_color)
         self.screen.blit(text_surface, position)
