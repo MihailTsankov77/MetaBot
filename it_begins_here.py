@@ -19,9 +19,6 @@ if __name__ == '__main__':
     sys.exit(0)
 
 
-# TODO change collision based on tile
-
-
 # TODO fix imports
 
 # with open('text_parsers/from_file_to_text/test/TestObject.py', 'r') as file:

@@ -14,7 +14,7 @@ class Main:
         self.mouse = GearMouse.get_instance(screen)
         self.manager = UI_manager 
 
-        self.robot = Robot(screen, tile=(1, 1))
+        self.robot = Robot(screen, tile=(8, 1))
 
         self.level = LevelBase(
             screen, 
