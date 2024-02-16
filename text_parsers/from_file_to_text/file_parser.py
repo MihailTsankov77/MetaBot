@@ -1,6 +1,6 @@
 import re
 
-from text_parsers.from_file_to_text.annotations import VISIBLE
+from text_parsers.from_file_to_text.annotations import Annotations
 
 def _find_class(line):
     class_pattern = r'class\s+(\w+)'
@@ -23,7 +23,7 @@ def _is_visible_property(line, properties):
     return match.group(1) in properties
 
 def _is_method_visible(line):
-    is_visible_pattern = f'\s+@{VISIBLE}'
+    is_visible_pattern = f'\s+@{Annotations.VISIBLE}'
     return re.match(is_visible_pattern, line)
 
 def _get_method_name(line):

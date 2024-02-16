@@ -1,12 +1,13 @@
+from enum import Enum
 
+class Annotations(Enum):
+    VISIBLE = 'visible'
 
-VISIBLE = 'visible'
-annotations = [VISIBLE]
-
-def annotation(func):
+def annotation_func(func):
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
     return wrapper
 
-for annotation in annotations:
-    globals()[VISIBLE] = annotation
+
+for annotation in Annotations:
+    globals()[annotation] = annotation_func
