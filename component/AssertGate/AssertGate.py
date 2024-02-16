@@ -34,7 +34,7 @@ class AssertGate:
     def coordinates(self):
         return  AssertGate.get_coordinates(self.tile)
 
-    def wait_for_condition(self):
+    def __wait_for_condition(self):
         if self.checked:
             return
         
@@ -47,7 +47,7 @@ class AssertGate:
                 self.on_fail()
 
     @property
-    def is_colliding_with_player(self):
+    def __is_colliding_with_player(self):
         return are_colliding(self.rect, self.player.rect)
 
     def draw(self):
@@ -55,7 +55,7 @@ class AssertGate:
 
         
 
-        if self.is_colliding_with_player:
-            self.wait_for_condition()
+        if self.__is_colliding_with_player:
+            self.__wait_for_condition()
         else:
             self.current_timer = 0

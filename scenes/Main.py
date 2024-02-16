@@ -1,20 +1,13 @@
 import pygame
-import pygame_gui
 
 from consts.game import FPS
 from component.Gear.GearButton import GearButton
 from component.Gear.GearMouse import GearMouse
 from component.Robot.Robot import Robot
 from component.AssertGate.AssertGate import AssertGate
-from component.base.Grid import Grid
-from component.base.TextArea import TextArea
 from scenes.LevelBase import LevelBase
 
 pygame.init()
-
-BG = (255, 255, 255)
-
-
 
 class Main:
     def __init__(self, screen, UI_manager):
@@ -39,31 +32,29 @@ class Main:
 
         self.gear = GearButton(screen, 100, (100, 100), lambda: self.robot.move_tile())
 
+
+    def __drew_entities(self):
+        self.gear.draw()          
+        self.assertGate.draw()
+        self.robot.draw()
+
+
     def __call__(self):
         clock = pygame.time.Clock()
 
         while True:
-            time_delta = clock.tick(FPS)/1000.0
+            time_delta = clock.tick(FPS) / 1000.0
 
             for event in pygame.event.get():
-                self.level.handle_input(event)
-
                 if event.type == pygame.QUIT:
                     return
 
-
+                self.level.handle_input(event)
                 self.manager.process_events(event)
-
-
-            self.screen.fill(BG)
 
             self.level.draw()
 
-            self.gear.draw()
-          
-            self.assertGate.draw()
-
-            self.robot.draw()
+            self.__drew_entities()
 
             self.manager.update(time_delta)
             self.manager.draw_ui(self.screen)

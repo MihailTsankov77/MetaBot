@@ -37,13 +37,13 @@ class Robot:
     def coordinates(self):
         return  Robot.get_coordinates(self.tile)
 
-    def animate(self):
+    def __animate(self):
         self.animation_timer += 1
         if self.animation_timer > self.animation_speed:
             self.current_frame =  (self.current_frame + 1) % self.number_of_frames
             self.animation_timer = 0
 
-    def move(self):
+    def __move(self):
         self.animation_speed = self.walking_animation_speed
         self.rect.x += self.walking_speed
 
@@ -52,7 +52,7 @@ class Robot:
         self.tile = (self.tile[0] + 1, self.tile[1])
 
     def draw(self):
-        self.animate()
+        self.__animate()
         self.screen.blit(self.frames[self.current_frame], self.rect)
 
         if self.rect.x >= self.future_position:
@@ -60,4 +60,4 @@ class Robot:
             self.future_position = self.rect.x
             self.rect.topleft = self.coordinates
         else:
-            self.move()
+            self.__move()

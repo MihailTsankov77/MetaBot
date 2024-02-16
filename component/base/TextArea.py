@@ -37,7 +37,7 @@ class TextArea:
     def get_text(self):
         return '\n'.join(self.rows)
     
-    def draw_text(self, text, position):
+    def __draw_text(self, text, position):
         text_surface = self.font.render(text, True, self.text_color)
         self.screen.blit(text_surface, position)
         
@@ -47,7 +47,7 @@ class TextArea:
             pygame.draw.rect(self.screen, self.text_color, self.rect, 2)
 
         for i, row in enumerate(self.rows):
-            self.draw_text(row, (
+            self.__draw_text(row, (
                 self.position[0], 
                 self.position[1] + i * self.font_size
                 ))

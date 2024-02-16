@@ -4,11 +4,14 @@ import pygame_gui
 from component.base.Background import Background
 from component.base.TextArea import TextArea
 from component.base.Grid import Grid
+from component.base.Text import Text
 from consts.game import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 class LevelBase:
     draw_grid = True
+
+    descriptionText = "Spikes deal 1 dmg\nGoblins deal 3 dmg\nBombs deal 2 dmg"
 
     def __init__(self, screen, levelConfig, manager):
         self.screen = screen
@@ -34,6 +37,8 @@ class LevelBase:
             html_text=commands,
             relative_rect=pygame.Rect((area_size[0] + textarea_size[0], area_y), area_size),
             manager=manager)
+        
+        self.description = Text(screen, self.descriptionText, (10, 0))
 
     def handle_input(self, event):
         self.textarea.handle_input(event)
@@ -44,6 +49,7 @@ class LevelBase:
     def draw(self):
         self.background.draw()
         self.textarea.draw()
+        self.description.draw()
 
         if self.draw_grid:
             self.grid.draw()
