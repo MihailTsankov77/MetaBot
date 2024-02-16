@@ -1,7 +1,6 @@
 import pygame
 
 from consts.game import FPS
-from component.Gear.GearButton import GearButton
 from component.Gear.GearMouse import GearMouse
 from component.Robot.Robot import Robot
 from component.AssertGate.AssertGate import AssertGate
@@ -15,13 +14,18 @@ class Main:
         self.mouse = GearMouse.get_instance(screen)
         self.manager = UI_manager 
 
-        self.level = LevelBase(screen, (
+        self.robot = Robot(screen, tile=(1, 1))
+
+        self.level = LevelBase(
+            screen, 
+            (
             'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>', 
             'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>'
-            ), self.manager)
+            ), 
+            self.manager,
+            lambda: self.robot.move_tile()
+            )
        
-        self.robot = Robot(screen, tile=(7.3, 1))
-
         self.assertGate = AssertGate(screen, 
                                      self.robot, 
                                      lambda robot: True, 
@@ -30,13 +34,16 @@ class Main:
                                      on_pass=lambda: print("Pass")
                                      )
 
-        self.gear = GearButton(screen, 100, (100, 100), lambda: self.robot.move_tile())
-
 
     def __drew_entities(self):
-        self.gear.draw()          
         self.assertGate.draw()
         self.robot.draw()
+
+
+    def __update(self, time_delta):
+        self.mouse.draw()
+        self.manager.update(time_delta)
+        pygame.display.update()
 
 
     def __call__(self):
@@ -56,7 +63,5 @@ class Main:
 
             self.__drew_entities()
 
-            self.manager.update(time_delta)
-            self.manager.draw_ui(self.screen)
-            self.mouse.draw()
-            pygame.display.update()
+            self.__update(time_delta)
+              

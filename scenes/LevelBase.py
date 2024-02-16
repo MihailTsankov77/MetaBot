@@ -5,6 +5,7 @@ from component.base.Background import Background
 from component.base.TextArea import TextArea
 from component.base.Grid import Grid
 from component.base.Text import Text
+from component.Gear.GearButton import GearButton
 from consts.game import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
@@ -13,8 +14,9 @@ class LevelBase:
 
     descriptionText = "Spikes deal 1 dmg\nGoblins deal 3 dmg\nBombs deal 2 dmg"
 
-    def __init__(self, screen, levelConfig, manager):
+    def __init__(self, screen, levelConfig, manager, on_start):
         self.screen = screen
+        self.manager = manager
         implementation, commands = levelConfig
 
         self.grid = Grid(screen)
@@ -40,6 +42,8 @@ class LevelBase:
         
         self.description = Text(screen, self.descriptionText, (10, 0))
 
+        self.start_button = GearButton(screen, 200, (SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100), on_start)
+
     def handle_input(self, event):
         self.textarea.handle_input(event)
 
@@ -47,9 +51,11 @@ class LevelBase:
         return self.textarea.get_text()
 
     def draw(self):
+        self.manager.draw_ui(self.screen)
         self.background.draw()
         self.textarea.draw()
         self.description.draw()
+        self.start_button.draw()
 
         if self.draw_grid:
             self.grid.draw()
