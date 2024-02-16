@@ -15,6 +15,10 @@ class Images_Loader:
             "columns": 5,
             "all_frames": 17
         },
+        "Background": {
+            "asset": "background.png",
+            "is_image": True
+        },
         "Gate":{
             "asset": "gate.png",
             "is_image": True

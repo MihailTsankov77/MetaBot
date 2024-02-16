@@ -4,7 +4,7 @@ from consts.game import TILE_ROW_COUNT, TILE_SIZE, TILE_COLUMN_COUNT
 
 class Grid:
     
-    def __init__(self, screen, visible_rows = [2]):
+    def __init__(self, screen, visible_rows = [1]):
         self.screen = screen
 
         self.grid = []

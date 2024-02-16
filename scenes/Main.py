@@ -7,6 +7,7 @@ from component.Robot.Robot import Robot
 from component.AssertGate.AssertGate import AssertGate
 from component.base.Grid import Grid
 from component.base.TextArea import TextArea
+from component.base.Background import Background
 
 pygame.init()
 
@@ -20,15 +21,16 @@ class Main:
         self.mouse = GearMouse.get_instance(screen)
         self.manager = UI_manager 
 
+        self.background = Background(screen)
        
-        self.robot = Robot(screen, tile=(7.3, 2))
+        self.robot = Robot(screen, tile=(7.3, 1))
 
         self.grid = Grid(screen)
 
         self.assertGate = AssertGate(screen, 
                                      self.robot, 
                                      lambda robot: True, 
-                                     tile=(8, 2),
+                                     tile=(8, 1),
                                      on_fail=lambda: print("Fail"), 
                                      on_pass=lambda: print("Pass")
                                      )
@@ -50,7 +52,7 @@ class Main:
 
             self.screen.fill(BG)
 
-
+            self.background.draw()
             self.grid.draw()
 
             self.gear.draw()

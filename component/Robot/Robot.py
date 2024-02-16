@@ -14,7 +14,7 @@ class Robot:
 
     walking_speed = 1
 
-    def __init__(self, screen, tile = (0, 2), size = (ROBOT_SIZE, ROBOT_SIZE)):
+    def __init__(self, screen, tile = (0, 1), size = (ROBOT_SIZE, ROBOT_SIZE)):
         self.screen = screen
         transformed_frames = []
         for i in range(self.number_of_frames):
