@@ -10,4 +10,5 @@ def annotation_func(func):
 
 
 for annotation in Annotations:
-    globals()[annotation] = annotation_func
+    globals()[annotation.value] = annotation_func
+

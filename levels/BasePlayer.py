@@ -1,5 +1,5 @@
 
-class Player:
+class BasePlayer:
     def __init__(self, x, health, robot):
         self.x = x
         self.__x = x
@@ -8,7 +8,6 @@ class Player:
         self.__health = health
 
         self.__robot = robot
-
     
     def _set_on_action_finished(self, on_action_finished):
         self.__robot.on_action_finished = on_action_finished
@@ -16,12 +15,6 @@ class Player:
     def _set_delay(self, delay_timer):
         self.__robot.delay(delay_timer)
 
-    def move(self):
-        self.x += 6
-
-    def take_damage(self, damage):
-        self.health -= damage
-    
     def _update(self):
         moved_this_turn = self.x - self.__x
         self.__x = self.x

@@ -3,7 +3,6 @@ import pygame
 from consts.game import SECOND, GATE_SIZE, TILE_SIZE, TILE_COLUMN_COUNT
 from images.image_loader.images import Images
 from utils.coordinates import get_coordinates_from_grid
-from utils.collision import are_colliding
 
 class AssertGate:
     size = (GATE_SIZE, GATE_SIZE)

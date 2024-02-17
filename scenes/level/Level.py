@@ -6,7 +6,7 @@ from component.AssertGate.AssertGate import AssertGate
 from scenes.level.LevelBase import LevelBase
 from scenes.transitions.Success import Success
 from scenes.transitions.Restart import Restart
-from levels.Player import Player
+from levels.Player_level_1 import Player_level_1
 from consts.game import FPS, BACKGROUND_COLOR, SECOND
 
 pygame.init()
@@ -14,23 +14,27 @@ pygame.init()
 # TODO 
 player_commands = [
     ('move', None),
-    # ('move', None),
+    ('move', None),
     # ('take_damage', 1),
     # ('move', None),
     # ('take_damage', 10),
     # ('move', None),
 ]
 
-player_code = 'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>'
-
-check_condition = lambda robot: True
-
-player_heath = 10
-player_x = 2
-
-assert_gate_x = 8
-
-Player_class = Player
+level_config = (
+#player_code: 
+'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>',
+#check_condition:
+lambda robot: True,
+#player_heath: 
+10,
+#player_x: 
+2,
+#assert_gate_x: 
+8,
+#Player_class: 
+Player_level_1,
+)
 
 class Level:
     def __init__(self, screen, UI_manager):
@@ -44,6 +48,8 @@ class Level:
         self.show_restart = Restart(self.screen)
         self._restart_timer = 0
         self._success_timer = 0
+
+        player_code, check_condition, player_heath, player_x, assert_gate_x, Player_class = level_config
 
         self.player_health = player_heath
         self.player_x = player_x
