@@ -66,7 +66,7 @@ class LevelBase:
         try:
             to_code(self.get_code(), {self.player_name: self.player})   
             return True
-        except PlayerDieException as e:
+        except Exception as e:
             print(e)
             self.__on_fail()
             return False
