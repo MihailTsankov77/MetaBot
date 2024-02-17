@@ -40,6 +40,8 @@ class Robot:
 
         self.on_action_finished = on_action_finished
 
+        self.__delay_timer = 0
+
     @staticmethod
     def get_coordinates(tile):
         return get_coordinates_from_grid(tile, TILE_SIZE, (0, 15))
@@ -76,6 +78,10 @@ class Robot:
         self.__animate()
         self.screen.blit(self.frames[self.current_frame], self.rect)
 
+        if self.__delay_timer:
+            self.__delay_timer -= 1
+            return
+
         if self.rect.x >= self.future_position and self.is_moving:
             self.animation_speed = self.standing_animation_speed
             self.future_position = self.rect.x
@@ -109,3 +115,7 @@ class Robot:
     def __check_if_in_screen(self):
         if self.tile[0] > TILE_COLUMN_COUNT - 1:
             self.__died()
+
+    @__do_nothing_if_dead
+    def delay(self, time):
+        self.__delay_timer = time

@@ -12,4 +12,4 @@ def build_commands_string(commands, player_name, current_command):
         if i == current_command:
             string_commands[i] = f'<font color=#00FF00>{string_commands[i]}</font>'
 
-    return '\n'.join(commands)
+    return '\n'.join(string_commands)
