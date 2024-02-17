@@ -14,4 +14,4 @@ class Main:
         self.show_choose_level.set_on_back(self.show_menu)
 
     def __call__(self):
-        self.show_choose_level()
+        self.start_level(1) # TODO

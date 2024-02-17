@@ -8,6 +8,7 @@ class ButtonBase:
         self.screen = screen
         self.on_hover = on_hover
         self.on_unHover = on_unHover
+        self.clicked = False
     
     def update(self):
         if self.on_click is None:
