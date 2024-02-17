@@ -15,7 +15,7 @@ class LevelBase:
 
     descriptionText = "Spikes deal 1 dmg\nGoblins deal 3 dmg\nBombs deal 2 dmg"
 
-    def __init__(self, screen, code, manager, player, commands ):
+    def __init__(self, screen, code, manager, player, commands):
         self.screen = screen
         self.manager = manager
 

@@ -41,6 +41,7 @@ class Robot:
         self.on_action_finished = on_action_finished
 
         self.__delay_timer = 0
+        self._is_player_delay = False
 
     @staticmethod
     def get_coordinates(tile):
@@ -79,7 +80,7 @@ class Robot:
         self.screen.blit(self.frames[self.current_frame], self.rect)
 
         if self.__delay_timer:
-            self.__delay_timer -= 1
+            self.__handle_delay()
             return
 
         if self.rect.x >= self.future_position and self.is_moving:
@@ -101,6 +102,7 @@ class Robot:
         self.health -= damage
         if self.health <= 0:
             self.__died()
+        self.on_action_finished()
 
     @__do_nothing_if_dead
     def __died(self):
@@ -117,5 +119,11 @@ class Robot:
             self.__died()
 
     @__do_nothing_if_dead
-    def delay(self, time):
+    def delay(self, time, is_player_delay = False):
         self.__delay_timer = time
+        self._is_player_delay = is_player_delay
+
+    def __handle_delay(self):
+        self.__delay_timer -= 1
+        if not self.__delay_timer and self._is_player_delay:
+            self.on_action_finished()

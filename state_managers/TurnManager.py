@@ -26,13 +26,20 @@ class TurnManager:
         if self.current_command >= len(self.commands):
             return
 
-        method = getattr(self.players, self.commands[self.current_command])
+        self.__call_command(self.commands[self.current_command])
+
+    def __call_command(self, command):
+        method_name, *raw_params = command
+        params = [param for param in raw_params if param]
+        method = getattr(self.players, method_name, None)
         if method:
-            method()
+            if params:
+                return method(*params)
+            return method()
 
     def next_turn(self):
-        if self.delay_player:
-            self.delay_player(SECOND // 2)
+        if self.delay_player and self.current_command >= 0:
+            self.delay_player(SECOND)
 
         self.__execute_command()
 

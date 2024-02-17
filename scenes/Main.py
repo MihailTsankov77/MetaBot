@@ -8,6 +8,16 @@ from scenes.LevelBase import LevelBase
 
 pygame.init()
 
+# TODO 
+player_commands = [
+    ('move_tile', None),
+    ('move_tile', None),
+    ('take_damage', 1),
+    ('move_tile', None),
+    ('take_damage', 10),
+    ('move_tile', None),
+]
+
 class Main:
     def __init__(self, screen, UI_manager):
         self.screen = screen
@@ -18,16 +28,12 @@ class Main:
                            health=10, 
                            on_death=lambda: print("Robot is dead"))
 
-        def robot_test():
-            self.robot.move_tile()
-            self.robot.take_damage(1)
-
         self.level = LevelBase(
             screen, 
             'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>',
             self.manager,
             player=self.robot,
-            commands=['move_tile', 'move_tile']
+            commands=player_commands
             )
        
         self.assertGate = AssertGate(screen, 
