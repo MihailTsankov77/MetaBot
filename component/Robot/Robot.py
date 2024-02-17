@@ -36,7 +36,7 @@ class Robot:
         self.health = health
         
         self.is_alive = True
-        self.is_moving = False
+        self.is_moving_forward = None
 
         self.on_action_finished = on_action_finished
 
@@ -66,15 +66,37 @@ class Robot:
             self.animation_timer = 0
 
     @__do_nothing_if_dead
-    def __move(self):
-        self.animation_speed = self.walking_animation_speed
-        self.rect.x += self.walking_speed
-
-    @__do_nothing_if_dead
     def move_tile(self, tiles=1):
-        self.is_moving = True
+        self.is_moving_forward = tiles > 0
         self.future_position = self.rect.x + tiles * TILE_SIZE
         self.tile = (self.tile[0] + tiles, self.tile[1])
+
+    @__do_nothing_if_dead
+    def __move(self):
+        self.animation_speed = self.walking_animation_speed
+        multiplier = 1 if self.is_moving_forward else -1
+        self.rect.x += self.walking_speed * multiplier
+
+
+    @__do_nothing_if_dead
+    def __handle_move(self):
+        if self.is_moving_forward == None:
+            return
+        
+        should_stop_moving = ((self.is_moving_forward and self.rect.x >= self.future_position) or 
+                                (not self.is_moving_forward and self.rect.x <= self.future_position))
+
+        if should_stop_moving:
+            self.animation_speed = self.standing_animation_speed
+            self.future_position = self.rect.x
+            self.rect.topleft = self.coordinates
+
+            self.is_moving_forward = None
+
+            if self.on_action_finished:
+                self.on_action_finished()
+        else:
+            self.__move()
 
     def update(self):
         self.__animate()
@@ -86,17 +108,7 @@ class Robot:
         
         self.__execute_take_damage()
 
-        if self.rect.x >= self.future_position and self.is_moving:
-            self.animation_speed = self.standing_animation_speed
-            self.future_position = self.rect.x
-            self.rect.topleft = self.coordinates
-
-            self.is_moving = False
-
-            if self.on_action_finished:
-                self.on_action_finished()
-        elif self.is_moving:
-            self.__move()
+        self.__handle_move()
 
         self.__check_if_in_screen()
         if self.health <= 0:

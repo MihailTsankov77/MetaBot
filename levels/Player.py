@@ -1,6 +1,4 @@
 
-
-
 class Player:
     def __init__(self, x, health, robot):
         self.x = x
@@ -9,17 +7,17 @@ class Player:
         self.health = health
         self.__health = health
 
-        self.robot = robot
+        self.__robot = robot
 
     
     def _set_on_action_finished(self, on_action_finished):
-        self.robot.on_action_finished = on_action_finished
+        self.__robot.on_action_finished = on_action_finished
     
     def _set_delay(self, delay_timer):
-        self.robot.delay(delay_timer)
+        self.__robot.delay(delay_timer)
 
     def move(self):
-        self.x += 2
+        self.x += 1
 
     def take_damage(self, damage):
         self.health -= damage
@@ -28,11 +26,11 @@ class Player:
         moved_this_turn = self.x - self.__x
         self.__x = self.x
         if moved_this_turn:
-            self.robot.move_tile(moved_this_turn)
+            self.__robot.move_tile(moved_this_turn)
 
         damage_taken_this_turn = self.__health - self.health
         self.__health = self.health
         if damage_taken_this_turn:
-            self.robot.take_damage(damage_taken_this_turn)
+            self.__robot.take_damage(damage_taken_this_turn)
 
-        self.robot.update()
+        self.__robot.update()
