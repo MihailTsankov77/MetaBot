@@ -14,11 +14,11 @@ pygame.init()
 # TODO 
 player_commands = [
     ('move', None),
-    ('move', None),
-    ('take_damage', 1),
-    ('move', None),
-    ('take_damage', 10),
-    ('move', None),
+    # ('move', None),
+    # ('take_damage', 1),
+    # ('move', None),
+    # ('take_damage', 10),
+    # ('move', None),
 ]
 
 class Level:
@@ -48,7 +48,8 @@ class Level:
             'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>',
             self.manager,
             player = self.player,
-            commands=player_commands
+            commands=player_commands,
+            on_command_finished = self.__on_fail # TODO if you are on the assert gate just turn flag up and then check it here
             )
        
         self.assertGate = AssertGate(self.screen, 

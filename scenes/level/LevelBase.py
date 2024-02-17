@@ -16,7 +16,7 @@ class LevelBase:
 
     descriptionText = "Spikes deal 1 dmg\nGoblins deal 3 dmg\nBombs deal 2 dmg"
 
-    def __init__(self, screen, code, manager, player, commands):
+    def __init__(self, screen, code, manager, player, commands, on_command_finished = None):
         self.screen = screen
         self.manager = manager
 
@@ -44,7 +44,7 @@ class LevelBase:
         self.description = Text(screen, self.descriptionText, (10, 0))
 
 
-        self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay)
+        self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay, on_command_finished=on_command_finished)
     
         player._set_on_action_finished(self.turn_manager.next_turn)
 
