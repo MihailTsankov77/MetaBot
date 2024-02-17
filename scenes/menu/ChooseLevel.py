@@ -60,7 +60,7 @@ class ChooseLevel:
     def __call__(self):
         self.is_running = True
         self.screen.fill(BACKGROUND_COLOR)
-        completed_levels = [1, 5] #SaveProgress('..../').get_completed_levels() # TODO fix path
+        completed_levels = [] #SaveProgress('..../').get_completed_levels() # TODO fix path
         for i in completed_levels:
             self.level_texts[i - 1].set_color((0, 255, 0))
 

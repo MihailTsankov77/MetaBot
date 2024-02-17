@@ -34,7 +34,7 @@ class Level:
         self._success_timer = 0
 
         self.robot = Robot(self.screen, tile=(1, 1), 
-                           health=1, 
+                           health=10, 
                            on_death = self.__on_fail)
 
         self.level = LevelBase(
