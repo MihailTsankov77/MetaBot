@@ -46,7 +46,6 @@ class LevelBase:
         
         self.description = Text(screen, self.descriptionText, (10, 0))
 
-
         self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay, on_command_finished=on_command_finished, player_name=player_name)
 
         player._set_on_action_finished(self.turn_manager.next_turn)

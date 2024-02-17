@@ -24,15 +24,23 @@ class TextArea:
             row_width = self.font.render(self.rows[-1], True, self.text_color).get_width()
             if row_width>= self.rect.width - 2 * self.padding_horizontal - 5:
                 self.rows.append('')
+            return
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 self.rows.append('')
-            elif event.key == pygame.K_BACKSPACE:
+                return
+
+            if event.key == pygame.K_TAB:
+                self.rows[-1] += '    '
+                return
+            
+            if event.key == pygame.K_BACKSPACE:
                 self.rows[-1] = self.rows[-1][:-1]
                 if len(self.rows[-1]) == 0:
                     if len(self.rows) > 1:
                         self.rows = self.rows[:-1]
+                return
     
     def get_text(self):
         return '\n'.join(self.rows)
