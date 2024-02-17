@@ -65,7 +65,7 @@ class LevelBase:
 
     def __handle_text_to_code(self):
         try:
-            to_code(self.get_code(), {'Reg': self.player})   
+            to_code(self.get_code(), {self.player_name: self.player})   
             return True
         except PlayerDieException as e:
             print(e)

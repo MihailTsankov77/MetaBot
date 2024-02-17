@@ -6,8 +6,8 @@ def _find_class(line):
     class_pattern = r'class\s+(\w+)'
     match = re.match(class_pattern, line)
     if not match:
-        return None
-    return match.group(1)
+        return False
+    return True
 
 
 def _is_property(line):
@@ -64,15 +64,14 @@ def _get_method(file_iter):
 def parse_file(file, properties=None):
     text = ''
    
-    class_name = ''
+    is_class = False
     file_iter = iter(file)
 
     for line in file_iter:
-        if not class_name:
-            name =  _find_class(line)
-            if name:
-                class_name += name
-                text += line
+        if not is_class:
+            if _find_class(line):
+                is_class = True
+                text += 'class Reg:'
             continue
         
         if _is_property(line):
