@@ -44,9 +44,9 @@ class LevelBase:
         self.description = Text(screen, self.descriptionText, (10, 0))
 
 
-        self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player.delay)
+        self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay)
     
-        player.on_action_finished = self.turn_manager.next_turn
+        player._set_on_action_finished(self.turn_manager.next_turn)
 
         self.start_button = GearButton(screen, 200, (SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100), self.__on_start)
         self.__is_started = False

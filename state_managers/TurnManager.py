@@ -2,8 +2,8 @@ from text_parsers.commands.commands_string_builder import build_commands_string
 from consts.game import PLAYER_NAME, SECOND
 
 class TurnManager:
-    def __init__(self, players, update_commands, commands, player_name = PLAYER_NAME, delay_player = None):
-        self.players = players
+    def __init__(self, player, update_commands, commands, player_name = PLAYER_NAME, delay_player = None):
+        self.player = player
         self.commands = commands
         self.update_commands = update_commands
         self.current_command = -1
@@ -31,7 +31,7 @@ class TurnManager:
     def __call_command(self, command):
         method_name, *raw_params = command
         params = [param for param in raw_params if param]
-        method = getattr(self.players, method_name, None)
+        method = getattr(self.player, method_name, None)
         if method:
             if params:
                 return method(*params)

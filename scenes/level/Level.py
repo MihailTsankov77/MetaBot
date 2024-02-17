@@ -6,18 +6,19 @@ from component.AssertGate.AssertGate import AssertGate
 from scenes.level.LevelBase import LevelBase
 from scenes.transitions.Success import Success
 from scenes.transitions.Restart import Restart
+from levels.Player import Player
 from consts.game import FPS, BACKGROUND_COLOR, SECOND
 
 pygame.init()
 
 # TODO 
 player_commands = [
-    ('move_tile', None),
-    ('move_tile', None),
+    ('move', None),
+    ('move', None),
     ('take_damage', 1),
-    ('move_tile', None),
+    ('move', None),
     ('take_damage', 10),
-    ('move_tile', None),
+    ('move', None),
 ]
 
 class Level:
@@ -33,15 +34,20 @@ class Level:
         self._restart_timer = 0
         self._success_timer = 0
 
-        self.robot = Robot(self.screen, tile=(1, 1), 
-                           health=10, 
+        self.player_health = 10
+        self.player_x = 1
+
+        self.robot = Robot(self.screen, tile=(self.player_x, 1), 
+                           health=self.player_health, 
                            on_death = self.__on_fail)
+
+        self.player = Player(self.player_x, self.player_health, self.robot)
 
         self.level = LevelBase(
             self.screen, 
             'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>',
             self.manager,
-            player=self.robot,
+            player = self.player,
             commands=player_commands
             )
        
@@ -83,7 +89,8 @@ class Level:
 
     def __update_entities(self):
         self.assertGate.update()
-        self.robot.update()
+        
+        self.player._update()
 
     def __update(self, time_delta):
         self.mouse.update()

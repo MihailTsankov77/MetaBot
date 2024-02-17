@@ -99,6 +99,8 @@ class Robot:
             self.__move()
 
         self.__check_if_in_screen()
+        if self.health <= 0:
+            self.__died()
 
     @__do_nothing_if_dead
     def take_damage(self, damage):
