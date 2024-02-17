@@ -18,6 +18,7 @@ class Player:
 
     def move(self):
         self.x += 1
+        self.health -= 1
 
     def take_damage(self, damage):
         self.health -= damage
@@ -25,12 +26,17 @@ class Player:
     def _update(self):
         moved_this_turn = self.x - self.__x
         self.__x = self.x
+        self.robot_in_action = False
+
         if moved_this_turn:
+            self.robot_in_action = True
             self.__robot.move_tile(moved_this_turn)
 
         damage_taken_this_turn = self.__health - self.health
         self.__health = self.health
         if damage_taken_this_turn:
+            self.robot_in_action = True
             self.__robot.take_damage(damage_taken_this_turn)
 
+        self.__robot.set_in_action(self.robot_in_action)
         self.__robot.update()

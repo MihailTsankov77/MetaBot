@@ -1,8 +1,14 @@
 import pygame
+from enum import Enum
 
 from images.image_loader.images import Images
 from consts.game import TILE_SIZE, ROBOT_SIZE, TILE_COLUMN_COUNT
 from utils.coordinates import get_coordinates_from_grid
+
+class Action(Enum):
+    Moving = 1
+    TakingDamage = 2,
+    Delay = 3
 
 class Robot:
     number_of_frames = 17
@@ -40,6 +46,9 @@ class Robot:
 
         self.on_action_finished = on_action_finished
 
+        self.in_action = False
+        self.current_actions = set()
+
         self.__delay_timer = 0
         self._is_player_delay = False
         self.future_damage = None
@@ -67,6 +76,7 @@ class Robot:
 
     @__do_nothing_if_dead
     def move_tile(self, tiles=1):
+        self.current_actions.add(Action.Moving)
         self.is_moving_forward = tiles > 0
         self.future_position = self.rect.x + tiles * TILE_SIZE
         self.tile = (self.tile[0] + tiles, self.tile[1])
@@ -93,8 +103,7 @@ class Robot:
 
             self.is_moving_forward = None
 
-            if self.on_action_finished:
-                self.on_action_finished()
+            self.current_actions.discard(Action.Moving)
         else:
             self.__move()
 
@@ -107,8 +116,8 @@ class Robot:
             return
         
         self.__execute_take_damage()
-
         self.__handle_move()
+        self.__handle_action_finished()
 
         self.__check_if_in_screen()
         if self.health <= 0:
@@ -116,6 +125,7 @@ class Robot:
 
     @__do_nothing_if_dead
     def take_damage(self, damage):
+       self.current_actions.add(Action.TakingDamage)
        self.future_damage = damage
 
     @__do_nothing_if_dead
@@ -127,7 +137,7 @@ class Robot:
         self.future_damage = None
         if self.health <= 0:
             self.__died()
-        self.on_action_finished()
+        self.current_actions.discard(Action.TakingDamage)
 
     @__do_nothing_if_dead
     def __died(self):
@@ -148,7 +158,25 @@ class Robot:
         self.__delay_timer = time
         self._is_player_delay = is_player_delay
 
+        if is_player_delay:
+            self.current_actions.add(Action.Delay)
+
     def __handle_delay(self):
         self.__delay_timer -= 1
         if not self.__delay_timer and self._is_player_delay:
+            self.current_actions.discard(Action.Delay)
+    
+    @__do_nothing_if_dead
+    def set_in_action(self, in_action):
+        if in_action:
+            self.in_action = in_action
+
+    @__do_nothing_if_dead
+    def __handle_action_finished(self):
+        if not self.in_action or len(self.current_actions):
+            return
+
+        self.in_action = False
+
+        if self.on_action_finished:
             self.on_action_finished()
