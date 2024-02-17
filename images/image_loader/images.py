@@ -15,8 +15,12 @@ class Images_Loader:
             "columns": 5,
             "all_frames": 17
         },
-        "Background": {
-            "asset": "background.png",
+        "LevelBackground": {
+            "asset": "level_background.png",
+            "is_image": True
+        },
+        "MenuBackground": {
+            "asset": "menu_background.png",
             "is_image": True
         },
         "Gate":{

@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 
-from component.base.Background import Background
+from component.backgrounds.LevelBackground import LevelBackground
 from component.base.TextArea import TextArea
 from component.base.Grid import Grid
 from component.base.Text import Text
@@ -20,7 +20,7 @@ class LevelBase:
         self.manager = manager
 
         self.grid = Grid(screen)
-        self.background = Background(screen)
+        self.background = LevelBackground(screen)
 
         area_size = (SCREEN_WIDTH // 7 * 2, SCREEN_HEIGHT - self.background.height)
         textarea_size = (SCREEN_WIDTH - 2 * area_size[0], area_size[1])

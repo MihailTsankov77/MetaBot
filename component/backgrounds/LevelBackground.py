@@ -3,12 +3,12 @@ import pygame
 from images.image_loader.images import Images
 from consts.game import TILE_SIZE, SCREEN_WIDTH
 
-class Background:
+class LevelBackground:
     offset_y = 2 * TILE_SIZE
 
     def __init__(self, screen):
-        self.image = Images.Background
-        self.flipped_image = pygame.transform.flip(Images.Background , True, False)
+        self.image = Images.LevelBackground
+        self.flipped_image = pygame.transform.flip(Images.LevelBackground , True, False)
         self.screen = screen
         rect = self.image.get_rect()
 
