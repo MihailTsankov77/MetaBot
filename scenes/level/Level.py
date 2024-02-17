@@ -1,10 +1,10 @@
 import pygame
 
-from consts.game import FPS
 from component.Gear.GearMouse import GearMouse
 from component.Robot.Robot import Robot
 from component.AssertGate.AssertGate import AssertGate
 from scenes.level.LevelBase import LevelBase
+from consts.game import FPS, BACKGROUND_COLOR
 
 pygame.init()
 
@@ -57,7 +57,7 @@ class Level:
         self.manager.update(time_delta)
         pygame.display.update()
 
-    def __call__(self, level):
+    def __init(self):
         clock = pygame.time.Clock()
 
         while True:
@@ -71,8 +71,10 @@ class Level:
                 self.manager.process_events(event)
 
             self.level.update()
-
             self.__update_entities()
-
             self.__update(time_delta)
+
+    def __call__(self, level):
+        self.screen.fill(BACKGROUND_COLOR)
+        self.__init()
               
