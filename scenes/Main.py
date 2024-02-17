@@ -14,7 +14,7 @@ class Main:
         self.mouse = GearMouse.get_instance(screen)
         self.manager = UI_manager 
 
-        self.robot = Robot(screen, tile=(2, 1), health=3)
+        self.robot = Robot(screen, tile=(8, 1), health=10, on_death=lambda: print("Robot is dead"))
 
         def robot_test():
             self.robot.move_tile()

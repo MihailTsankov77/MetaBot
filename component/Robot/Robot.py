@@ -1,7 +1,7 @@
 import pygame
 
 from images.image_loader.images import Images
-from consts.game import TILE_SIZE, ROBOT_SIZE
+from consts.game import TILE_SIZE, ROBOT_SIZE, TILE_COLUMN_COUNT
 from utils.coordinates import get_coordinates_from_grid
 
 class Robot:
@@ -10,7 +10,7 @@ class Robot:
     walking_animation_speed = 1
     animation_speed = standing_animation_speed
     animation_timer = 1
-    walking_speed = 1
+    walking_speed = 2
 
     def __init__(self, screen, tile = (0, 1), size = (ROBOT_SIZE, ROBOT_SIZE), on_death = None, health = 10):
         self.screen = screen
@@ -66,12 +66,17 @@ class Robot:
         self.__animate()
         self.screen.blit(self.frames[self.current_frame], self.rect)
 
+        #draw hitbox
+        pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 2)
+
         if self.rect.x >= self.future_position:
             self.animation_speed = self.standing_animation_speed
             self.future_position = self.rect.x
             self.rect.topleft = self.coordinates
         else:
             self.__move()
+
+        self.__check_if_in_screen()
 
     @__do_nothing_if_dead
     def take_damage(self, damage):
@@ -87,3 +92,8 @@ class Robot:
         self.current_frame = 13
         if self.on_death:
             self.on_death()
+    
+    @__do_nothing_if_dead
+    def __check_if_in_screen(self):
+        if self.tile[0] > TILE_COLUMN_COUNT - 1:
+            self.__died()
