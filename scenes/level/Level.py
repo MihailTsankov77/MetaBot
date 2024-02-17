@@ -11,8 +11,6 @@ from levels.levels_config import levels_configs
 
 pygame.init()
 
-
-
 class Level:
     def __init__(self, screen, UI_manager):
         self.screen = screen
@@ -26,7 +24,7 @@ class Level:
         self._restart_timer = 0
         self._success_timer = 0
 
-        level_config = levels_configs.get_level_config(1)
+        level_config = levels_configs.get_level_config(2)
 
         self.player_health = level_config.player_health
         self.player_x = level_config.player_x

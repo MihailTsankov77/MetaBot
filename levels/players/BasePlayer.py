@@ -8,7 +8,8 @@ class BasePlayer:
         self.__health = health
 
         self.__robot = robot
-    
+        self._trigger_action = False
+
     def _set_on_action_finished(self, on_action_finished):
         self.__robot.on_action_finished = on_action_finished
     
@@ -30,5 +31,6 @@ class BasePlayer:
             self.robot_in_action = True
             self.__robot.take_damage(damage_taken_this_turn)
 
-        self.__robot.set_in_action(self.robot_in_action)
+        self.__robot.set_in_action(self.robot_in_action or self._trigger_action)
+        self._trigger_action = False
         self.__robot.update()

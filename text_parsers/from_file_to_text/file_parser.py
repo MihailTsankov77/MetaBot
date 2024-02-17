@@ -71,16 +71,16 @@ def parse_file(file, properties=None):
         if not is_class:
             if _find_class(line):
                 is_class = True
-                text += 'class Reg:'
+                text += 'class Reg:\n'
             continue
         
         if _is_property(line):
             if _is_visible_property(line, properties):
-                text += '\n' + line
+                text += line + '\n'
                 continue
         
         if _is_method_visible(line):
-            text += '\n' +  _get_method(file_iter)
+            text +=  _get_method(file_iter)
             continue
             
     return text

@@ -20,7 +20,7 @@ class __LevelsConfigs:
     def __init__(self):
         self.levels_configs = []
 
-    def add_level_config(self, level, check_condition, player_health, player_x, assert_gate_x, player_commands):
+    def add_level_config(self, level, check_condition, player_x, player_health, assert_gate_x, player_commands):
         self.levels_configs.append(_LevelConfig(level, check_condition, player_health, player_x, assert_gate_x, player_commands))
     
     def get_level_config(self, level):
@@ -32,12 +32,26 @@ levels_configs = __LevelsConfigs()
 levels_configs.add_level_config(
     1,
     lambda _: True,
-    10,
-    2,
+    2, 1,
     8,
     [
         ('move', None),
         ('move', None),
+    ]
+)
+
+levels_configs.add_level_config(
+    2,
+    lambda _: True,
+    1, 10,
+    8,
+    [
+        ('change_distance', None),
+        ('_move', None),
+        ('change_distance', None),
+        ('_move', None),
+        ('change_distance', None),
+        ('_move', None),
     ]
 )
 
