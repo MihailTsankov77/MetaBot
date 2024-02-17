@@ -30,13 +30,11 @@ def _check_code(text):
             return True
     return False
         
-def to_code(text, object, object_name):
+def to_code(text, globals):
     if _check_code(text):
         raise PlayerDieException("Naughty, naughty! Check your python")
 
-    locals()[object_name] = object
     try:
-        exec(text)
+        exec(text, globals)
     except Exception:
         raise PlayerDieException("Compilation error. Check your code.")
-    return locals()[object_name]

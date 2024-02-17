@@ -8,7 +8,10 @@ from component.base.Text import Text
 from component.Gear.GearButton import GearButton
 from state_managers.TurnManager import TurnManager
 from component.buttons.TextButton import TextButton
-from consts.game import SCREEN_WIDTH, SCREEN_HEIGHT
+from consts.game import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_NAME
+
+from text_parsers.from_text_to_code.text_parser import to_code
+from text_parsers.from_text_to_code.PlayerDieException import PlayerDieException
 
 
 class LevelBase:
@@ -16,7 +19,7 @@ class LevelBase:
 
     descriptionText = "Spikes deal 1 dmg\nGoblins deal 3 dmg\nBombs deal 2 dmg"
 
-    def __init__(self, screen, code, manager, player, commands, on_command_finished = None):
+    def __init__(self, screen, code, manager, player, commands, on_fail, on_command_finished = None, player_name = PLAYER_NAME):
         self.screen = screen
         self.manager = manager
 
@@ -44,9 +47,13 @@ class LevelBase:
         self.description = Text(screen, self.descriptionText, (10, 0))
 
 
-        self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay, on_command_finished=on_command_finished)
-    
+        self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay, on_command_finished=on_command_finished, player_name=player_name)
+
         player._set_on_action_finished(self.turn_manager.next_turn)
+
+        self.player = player
+        self.player_name = player_name
+        self.__on_fail = on_fail
 
         self.start_button = GearButton(screen, 200, (SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100), self.__on_start)
         self.__is_started = False
@@ -56,10 +63,21 @@ class LevelBase:
     def set_on_back(self, on_back):
         self.back_button.set_on_click(on_back)
 
+    def __handle_text_to_code(self):
+        try:
+            to_code(self.get_code(), {'Reg': self.player})   
+            return True
+        except PlayerDieException as e:
+            print(e)
+            self.__on_fail()
+            return False
+
     def __on_start(self):
         if self.__is_started:
             return
         
+        if not self.__handle_text_to_code():
+            return
         self.__is_started = True
         self.turn_manager.next_turn()
 

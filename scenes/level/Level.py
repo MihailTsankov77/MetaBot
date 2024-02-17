@@ -46,6 +46,7 @@ class Level:
             level_config['player_code'],
             self.manager,
             player = self.player,
+            on_fail=self.__on_fail,
             commands= level_config['player_commands'],
             on_command_finished = on_command_finished
             )
