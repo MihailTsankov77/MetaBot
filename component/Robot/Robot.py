@@ -71,10 +71,10 @@ class Robot:
         self.rect.x += self.walking_speed
 
     @__do_nothing_if_dead
-    def move_tile(self):
+    def move_tile(self, tiles=1):
         self.is_moving = True
-        self.future_position = self.rect.x + TILE_SIZE
-        self.tile = (self.tile[0] + 1, self.tile[1])
+        self.future_position = self.rect.x + tiles * TILE_SIZE
+        self.tile = (self.tile[0] + tiles, self.tile[1])
 
     def update(self):
         self.__animate()

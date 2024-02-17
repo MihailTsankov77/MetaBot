@@ -19,7 +19,7 @@ class Player:
         self.robot.delay(delay_timer)
 
     def move(self):
-        self.x += 1
+        self.x += 2
 
     def take_damage(self, damage):
         self.health -= damage
@@ -27,8 +27,8 @@ class Player:
     def _update(self):
         moved_this_turn = self.x - self.__x
         self.__x = self.x
-        for i in range(moved_this_turn):
-            self.robot.move_tile()
+        if moved_this_turn:
+            self.robot.move_tile(moved_this_turn)
 
         damage_taken_this_turn = self.__health - self.health
         self.__health = self.health
