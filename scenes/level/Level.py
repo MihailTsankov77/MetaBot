@@ -21,6 +21,17 @@ player_commands = [
     # ('move', None),
 ]
 
+player_code = 'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>'
+
+check_condition = lambda robot: True
+
+player_heath = 10
+player_x = 2
+
+assert_gate_x = 8
+
+Player_class = Player
+
 class Level:
     def __init__(self, screen, UI_manager):
         self.screen = screen
@@ -34,28 +45,36 @@ class Level:
         self._restart_timer = 0
         self._success_timer = 0
 
-        self.player_health = 10
-        self.player_x = 8
+        self.player_health = player_heath
+        self.player_x = player_x
 
         self.robot = Robot(self.screen, tile=(self.player_x, 1), 
                            health=self.player_health, 
                            on_death = self.__on_fail)
 
-        self.player = Player(self.player_x, self.player_health, self.robot)
+        self.player = Player_class(self.player_x, self.player_health, self.robot)
+
+        self.no_more_commands_dead_timer = None
+        def on_command_finished():
+            self.no_more_commands_dead_timer = 3 * SECOND
 
         self.level = LevelBase(
             self.screen, 
-            'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>',
+            player_code,
             self.manager,
             player = self.player,
             commands=player_commands,
-            on_command_finished = self.__on_fail # TODO if you are on the assert gate just turn flag up and then check it here
+            on_command_finished = on_command_finished
             )
+        
+        def on_step_on_assert_gate():
+            self.no_more_commands_dead_timer = None
        
         self.assertGate = AssertGate(self.screen, 
                                      self.robot, 
-                                     lambda robot: True, 
-                                     tile=(8, 1),
+                                     check_condition, 
+                                     tile=(assert_gate_x, 1),
+                                     on_step = on_step_on_assert_gate,
                                      on_pass = self.__on_success,
                                      on_fail = self.__on_fail)
 
@@ -86,19 +105,26 @@ class Level:
                 return 2
             return 1
         return 0
-
+    
     def set_on_back(self, on_back):
         self.level.set_on_back(on_back)
 
+    def __handle_end(self):
+        if self.no_more_commands_dead_timer:
+            self.no_more_commands_dead_timer -= 1
+            if self.no_more_commands_dead_timer == 0:
+                self.__on_fail()
+
     def __update_entities(self):
         self.assertGate.update()
-        
         self.player._update()
 
     def __update(self, time_delta):
+        self.__handle_end()
         self.mouse.update()
         self.manager.update(time_delta)
         pygame.display.update()
+
 
     def __init(self):
         clock = pygame.time.Clock()
