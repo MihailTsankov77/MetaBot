@@ -14,7 +14,11 @@ class Main:
         self.mouse = GearMouse.get_instance(screen)
         self.manager = UI_manager 
 
-        self.robot = Robot(screen, tile=(8, 1))
+        self.robot = Robot(screen, tile=(2, 1), health=3)
+
+        def robot_test():
+            self.robot.move_tile()
+            self.robot.take_damage(1)
 
         self.level = LevelBase(
             screen, 
@@ -23,7 +27,7 @@ class Main:
             'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>'
             ), 
             self.manager,
-            lambda: self.robot.move_tile()
+            robot_test
             )
        
         self.assertGate = AssertGate(screen, 
