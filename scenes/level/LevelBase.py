@@ -7,6 +7,7 @@ from component.base.Grid import Grid
 from component.base.Text import Text
 from component.Gear.GearButton import GearButton
 from state_managers.TurnManager import TurnManager
+from component.buttons.TextButton import TextButton
 from consts.game import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
@@ -50,6 +51,11 @@ class LevelBase:
         self.start_button = GearButton(screen, 200, (SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100), self.__on_start)
         self.__is_started = False
 
+        self.back_button = TextButton(screen, 'BACK', (SCREEN_WIDTH - 50, 20), font_size=20, hover_color=(0, 200, 20))
+
+    def set_on_back(self, on_back):
+        self.back_button.set_on_click(on_back)
+
     def __on_start(self):
         if self.__is_started:
             return
@@ -73,6 +79,7 @@ class LevelBase:
         self.textarea.update()
         self.description.update()
         self.start_button.update()
+        self.back_button.update()
 
         if self.draw_grid:
             self.grid.update()

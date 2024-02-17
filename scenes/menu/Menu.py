@@ -14,8 +14,7 @@ class Menu:
                                        'START THE GAME', 
                                        (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 
                                        open_choose_level,
-                                       hover_color=(200, 0, 200)                                       
-                                       )
+                                       hover_color=(200, 0, 200))
 
     def __update(self):
         self.background.update()

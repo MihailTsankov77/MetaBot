@@ -2,7 +2,7 @@ import pygame
 
 class ButtonBase:
 
-    def __init__(self, screen, component, on_click, on_hover=None, on_unHover=None):
+    def __init__(self, screen, component, on_click = None, on_hover=None, on_unHover=None):
         self.component = component
         self.on_click = on_click
         self.screen = screen
@@ -10,6 +10,9 @@ class ButtonBase:
         self.on_unHover = on_unHover
     
     def update(self):
+        if self.on_click is None:
+            return
+
         pos = pygame.mouse.get_pos()
 
         if self.component.rect.collidepoint(pos):
@@ -17,7 +20,8 @@ class ButtonBase:
                 self.on_hover()
             if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 self.clicked = True
-                self.on_click()
+                if self.on_click is not None:
+                    self.on_click()
         else:
             if self.on_unHover is not None:
                 self.on_unHover()

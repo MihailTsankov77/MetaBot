@@ -8,8 +8,9 @@ class Main:
         self.manager = manager
 
         self.start_level = Level(screen, manager)
-
         self.show_menu = Menu(screen, lambda: self.start_level(1))
+
+        self.start_level.set_on_back(self.show_menu)
 
     def __call__(self):
         self.show_menu()

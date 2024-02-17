@@ -44,6 +44,8 @@ class Level:
                                      on_pass=lambda: print("Pass")
                                      )
 
+    def set_on_back(self, on_back):
+        self.level.set_on_back(on_back)
 
     def __update_entities(self):
         self.assertGate.update()
@@ -54,7 +56,6 @@ class Level:
         self.mouse.update()
         self.manager.update(time_delta)
         pygame.display.update()
-
 
     def __call__(self, level):
         clock = pygame.time.Clock()

@@ -9,7 +9,7 @@ class TextButton:
                  screen, 
                  text, 
                  position, 
-                 on_click, 
+                 on_click = None, 
                  font_size = 40, 
                  hover_color = (0, 0, 0), 
                  text_color = (255, 255, 255)):
@@ -21,6 +21,9 @@ class TextButton:
             self.text.set_font_color(text_color)
        
         self.button = ButtonBase(screen, self.text, on_click, on_hover, on_unHover)
+
+    def set_on_click(self, on_click):
+        self.button.on_click = on_click
 
     def update(self):
         self.button.update()
