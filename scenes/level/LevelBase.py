@@ -9,9 +9,7 @@ from component.Gear.GearButton import GearButton
 from state_managers.TurnManager import TurnManager
 from component.buttons.TextButton import TextButton
 from consts.game import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_NAME
-
 from text_parsers.from_text_to_code.text_parser import to_code
-from text_parsers.from_text_to_code.PlayerDieException import PlayerDieException
 
 
 class LevelBase:

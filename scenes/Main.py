@@ -9,9 +9,11 @@ class Main:
 
         self.start_level = Level(screen, manager)
         self.show_choose_level = ChooseLevel(screen, self.start_level)
+
         self.start_level.set_on_back(self.show_choose_level)
+
         self.show_menu = Menu(screen, self.show_choose_level)
         self.show_choose_level.set_on_back(self.show_menu)
 
     def __call__(self):
-        self.start_level(1) # TODO
+        self.show_menu()

@@ -15,16 +15,16 @@ class Level:
     def __init__(self, screen, UI_manager):
         self.screen = screen
         self.manager = UI_manager 
-        self.__base_init()
+        self.on_back = None
 
-    def __base_init(self):
+    def __base_init(self, level):
         self.mouse = GearMouse.get_instance(self.screen)
-        self.show_success =  Success(self.screen, lambda: print('TODO'))
+        self.show_success =  Success(self.screen, self.on_back)
         self.show_restart = Restart(self.screen)
         self._restart_timer = 0
         self._success_timer = 0
 
-        level_config = levels_configs.get_level_config(2)
+        level_config = levels_configs.get_level_config(level)
 
         self.player_health = level_config.player_health
         self.player_x = level_config.player_x
@@ -48,8 +48,9 @@ class Level:
             player = self.player,
             on_fail=self.__on_fail,
             commands= level_config.player_commands,
-            on_command_finished = on_command_finished
-            )
+            on_command_finished = on_command_finished)
+        
+        self.level.set_on_back(self.on_back)
         
         def on_step_on_assert_gate():
             self.no_more_commands_dead_timer = None
@@ -94,7 +95,7 @@ class Level:
         return 0
     
     def set_on_back(self, on_back):
-        self.level.set_on_back(on_back)
+        self.on_back = on_back
 
     def __handle_end(self):
         if self.no_more_commands_dead_timer:
@@ -135,7 +136,7 @@ class Level:
 
     def __call__(self, level):
         self.screen.fill(BACKGROUND_COLOR)
-        self.__base_init()
+        self.__base_init(level)
         self.show_restart.set_on_button_press(lambda: self.__call__(level))
         self.__init()
               

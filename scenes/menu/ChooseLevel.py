@@ -12,10 +12,7 @@ class ChooseLevel:
         self.screen = screen
         self.background = MenuBackground(screen)
         self.mouse = GearMouse.get_instance(screen)
-
-        def choose_level(level):
-            self.is_running = False
-            start_level(level)
+        self.start_level = start_level
 
         self.level_texts = []
         for i in range(LEVEL_COUNT):
@@ -23,19 +20,15 @@ class ChooseLevel:
                 TextButton(screen, 
                            f'Level {i + 1}', 
                            (i % 5 * 150 + 300, i // 5 * 100 + SCREEN_HEIGHT // 2 - 100), 
-                           lambda: choose_level(i),
+                           self.start_level if i < 3 else print,
+                           param=i + 1,
                            font_size=30,
                            hover_color=(200, 0, 200)))
-            
+                    
         self.back_button = TextButton(screen, 'BACK', (SCREEN_WIDTH - 50, 20), font_size=20, hover_color=(0, 200, 20))
 
-        self.is_running = True
-
     def set_on_back(self, on_back):
-        def _on_back():
-            self.is_running = False
-            on_back()
-        self.back_button.set_on_click(_on_back)
+        self.back_button.set_on_click(on_back)
       
     def __update(self):
         self.background.update()
@@ -50,7 +43,7 @@ class ChooseLevel:
     def __init(self):
         clock = pygame.time.Clock()
 
-        while self.is_running:
+        while True:
             clock.tick(FPS)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -58,7 +51,6 @@ class ChooseLevel:
             self.__update()
 
     def __call__(self):
-        self.is_running = True
         self.screen.fill(BACKGROUND_COLOR)
         completed_levels = [] #SaveProgress('..../').get_completed_levels() # TODO fix path
         for i in completed_levels:
