@@ -36,8 +36,10 @@ class Level:
         self.player = level_config.player_class(self.player_x, self.player_health, self.robot)
 
         self.no_more_commands_dead_timer = None
+        self.run_out_of_commands = False
         def on_command_finished():
             self.no_more_commands_dead_timer = 2 * SECOND
+            self.run_out_of_commands = True
 
         self.level = LevelBase(
             self.screen, 
@@ -51,10 +53,13 @@ class Level:
         
         def on_step_on_assert_gate():
             self.no_more_commands_dead_timer = None
+
+        def gate_condition(robot):
+            return self.run_out_of_commands and level_config.check_condition(robot)
        
         self.assertGate = AssertGate(self.screen, 
                                      self.robot, 
-                                     level_config.check_condition, 
+                                     gate_condition, 
                                      tile=(level_config.assert_gate_x, 1),
                                      on_step = on_step_on_assert_gate,
                                      on_pass = self.__on_success,
