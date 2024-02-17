@@ -47,7 +47,7 @@ class Main:
 
     def __drew_entities(self):
         self.assertGate.draw()
-        self.robot.draw()
+        self.robot.update()
 
 
     def __update(self, time_delta):
