@@ -12,6 +12,6 @@ class Text:
         self.position = position
         self.font = pygame.font.SysFont(self.font_family, self.font_size)
 
-    def draw(self):
+    def update(self):
         text = self.font.render(self.text, True, self.text_color)
         self.screen.blit(text, self.position)

@@ -24,5 +24,5 @@ class Gear:
     def set_position(self, position):
         self.rect.center = position
 
-    def draw(self):
+    def update(self):
         self.screen.blit(self.image, self.rect)

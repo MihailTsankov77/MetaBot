@@ -41,7 +41,7 @@ class TextArea:
         text_surface = self.font.render(text, True, self.text_color)
         self.screen.blit(text_surface, position)
         
-    def draw(self):
+    def update(self):
         if self.show_background:
             pygame.draw.rect(self.screen, self.back_ground, self.rect)
             pygame.draw.rect(self.screen, self.text_color, self.rect, 2)

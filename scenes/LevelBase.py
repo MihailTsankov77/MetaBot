@@ -67,12 +67,12 @@ class LevelBase:
     def set_commands(self, commands):
         self.commandsTile.set_text(commands)
 
-    def draw(self):
+    def update(self):
         self.manager.draw_ui(self.screen)
-        self.background.draw()
-        self.textarea.draw()
-        self.description.draw()
-        self.start_button.draw()
+        self.background.update()
+        self.textarea.update()
+        self.description.update()
+        self.start_button.update()
 
         if self.draw_grid:
-            self.grid.draw()
+            self.grid.update()

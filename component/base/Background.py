@@ -22,6 +22,6 @@ class Background:
     def height(self):
         return self.image.get_height() - self.offset_y
 
-    def draw(self):
+    def update(self):
         self.screen.blit(self.image, self.rect)
         self.screen.blit(self.flipped_image, self.flipped_rect)

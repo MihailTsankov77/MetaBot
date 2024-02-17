@@ -50,7 +50,7 @@ class AssertGate:
     def __is_colliding_with_player(self):
         return are_colliding(self.tile, self.player.tile)
 
-    def draw(self):
+    def update(self):
         self.screen.blit(self.image, self.rect)
 
         if self.__is_colliding_with_player:

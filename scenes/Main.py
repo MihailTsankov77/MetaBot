@@ -45,13 +45,13 @@ class Main:
                                      )
 
 
-    def __drew_entities(self):
-        self.assertGate.draw()
+    def __update_entities(self):
+        self.assertGate.update()
         self.robot.update()
 
 
     def __update(self, time_delta):
-        self.mouse.draw()
+        self.mouse.update()
         self.manager.update(time_delta)
         pygame.display.update()
 
@@ -69,9 +69,9 @@ class Main:
                 self.level.handle_input(event)
                 self.manager.process_events(event)
 
-            self.level.draw()
+            self.level.update()
 
-            self.__drew_entities()
+            self.__update_entities()
 
             self.__update(time_delta)
               

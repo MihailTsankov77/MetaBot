@@ -8,7 +8,7 @@ class ButtonBase:
         self.screen = screen
         self.on_hover = on_hover
     
-    def draw(self):
+    def update(self):
         pos = pygame.mouse.get_pos()
 
         if self.component.rect.collidepoint(pos):
@@ -21,4 +21,4 @@ class ButtonBase:
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
         
-        self.component.draw()
+        self.component.update()

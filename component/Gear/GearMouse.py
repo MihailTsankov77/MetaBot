@@ -13,10 +13,10 @@ class GearMouse:
     def rotate(self, speed):
         self.gear.rotate(speed)
 
-    def draw(self):
+    def update(self):
         mouse_pos = pygame.mouse.get_pos()
         self.gear.set_position(mouse_pos)
-        self.gear.draw()
+        self.gear.update()
 
     @staticmethod
     def get_instance(screen):

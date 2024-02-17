@@ -14,5 +14,5 @@ class GearButton:
        
         self.button = ButtonBase(screen, self.gear, on_click, on_hover)
 
-    def draw(self):
-        self.button.draw()
+    def update(self):
+        self.button.update()
