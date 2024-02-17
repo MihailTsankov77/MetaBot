@@ -14,7 +14,9 @@ class Main:
         self.mouse = GearMouse.get_instance(screen)
         self.manager = UI_manager 
 
-        self.robot = Robot(screen, tile=(8, 1), health=10, on_death=lambda: print("Robot is dead"))
+        self.robot = Robot(screen, tile=(1, 1), 
+                           health=10, 
+                           on_death=lambda: print("Robot is dead"))
 
         def robot_test():
             self.robot.move_tile()
@@ -22,12 +24,10 @@ class Main:
 
         self.level = LevelBase(
             screen, 
-            (
-            'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>', 
-            'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>'
-            ), 
+            'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>',
             self.manager,
-            robot_test
+            player=self.robot,
+            commands=['move_tile', 'move_tile']
             )
        
         self.assertGate = AssertGate(screen, 

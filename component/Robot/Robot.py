@@ -12,9 +12,14 @@ class Robot:
     animation_timer = 1
     walking_speed = 2
 
-    def __init__(self, screen, tile = (0, 1), size = (ROBOT_SIZE, ROBOT_SIZE), on_death = None, health = 10):
+    def __init__(self, screen, 
+                 tile, 
+                 on_death = None, 
+                 health = 10,
+                 on_action_finished = None):
         self.screen = screen
         transformed_frames = []
+        size = (ROBOT_SIZE, ROBOT_SIZE)
         for i in range(self.number_of_frames):
             transformed_frames.append(pygame.transform.scale(Images.Robot[i], size))
         self.frames =  transformed_frames
@@ -29,7 +34,11 @@ class Robot:
 
         self.on_death = on_death
         self.health = health
+        
         self.is_alive = True
+        self.is_moving = False
+
+        self.on_action_finished = on_action_finished
 
     @staticmethod
     def get_coordinates(tile):
@@ -59,6 +68,7 @@ class Robot:
 
     @__do_nothing_if_dead
     def move_tile(self):
+        self.is_moving = True
         self.future_position = self.rect.x + TILE_SIZE
         self.tile = (self.tile[0] + 1, self.tile[1])
 
@@ -66,14 +76,16 @@ class Robot:
         self.__animate()
         self.screen.blit(self.frames[self.current_frame], self.rect)
 
-        #draw hitbox
-        pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 2)
-
-        if self.rect.x >= self.future_position:
+        if self.rect.x >= self.future_position and self.is_moving:
             self.animation_speed = self.standing_animation_speed
             self.future_position = self.rect.x
             self.rect.topleft = self.coordinates
-        else:
+
+            self.is_moving = False
+
+            if self.on_action_finished:
+                self.on_action_finished()
+        elif self.is_moving:
             self.__move()
 
         self.__check_if_in_screen()
