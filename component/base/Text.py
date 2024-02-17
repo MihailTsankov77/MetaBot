@@ -1,17 +1,22 @@
 import pygame
 
 class Text:
-    font_size = 20
     font_family = "arial"
     text_color = (255, 255, 255)
 
-
-    def __init__(self, screen, text, position):
+    def __init__(self, screen, text, position, font_size = 20):
         self.screen = screen
         self.text = text
         self.position = position
-        self.font = pygame.font.SysFont(self.font_family, self.font_size)
+        self.font_size = font_size
+        self.set_font_color(self.text_color)
 
     def update(self):
         text = self.font.render(self.text, True, self.text_color)
         self.screen.blit(text, self.position)
+
+    def set_font_color(self, color):
+        self.text_color = color
+        self.font = pygame.font.SysFont(self.font_family, self.font_size)
+        self.rect = self.font.render(self.text, True, self.text_color).get_rect()
+        self.rect.topleft = self.position
