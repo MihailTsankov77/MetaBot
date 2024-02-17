@@ -1,30 +1,43 @@
 from  text_parsers.from_file_to_text.file_parser import parse_file
-from levels.players.Player_level_1 import Player_level_1
+class _LevelConfig:
+    def __init__(self, level, check_condition, player_health, player_x, assert_gate_x, player_commands):
+        self.level = level
+        self.check_condition = check_condition
+        self.player_health = player_health
+        self.player_x = player_x
+        self.assert_gate_x = assert_gate_x
+        class_name = f'Player_level_{level}'
+        self.player_class = __import__(f'levels.players.{class_name}', fromlist=[class_name]).__dict__[class_name]
+        self.player_code = self.__get_code(level)
+        self.player_commands = player_commands
 
+    @staticmethod
+    def __get_code(level):
+        with open(f'levels/players/Player_level_{level}.py', 'r') as file:
+            return parse_file(file)
+        
+class __LevelsConfigs:
+    def __init__(self):
+        self.levels_configs = []
 
-def __get_code(level):
-    with open(f'levels/players/Player_level_{level}.py', 'r') as file:
-        return parse_file(file)
+    def add_level_config(self, level, check_condition, player_health, player_x, assert_gate_x, player_commands):
+        self.levels_configs.append(_LevelConfig(level, check_condition, player_health, player_x, assert_gate_x, player_commands))
     
+    def get_level_config(self, level):
+        return self.levels_configs[level - 1]
 
-__level_1_config = {
-"check_condition": lambda robot: True,
-"player_health": 10,
-"player_x": 2,
-"assert_gate_x": 8,
-"player_class": Player_level_1,
-"player_code":__get_code(1),
-"player_commands": [
-    ('move', None),
-    ('move', None),
-    # ('take_damage', 1),
-    # ('move', None),
-    # ('take_damage', 10),
-    # ('move', None),
-]
-}
-
-# TODO make class
+levels_configs = __LevelsConfigs()
 
 
-levels_configs = [__level_1_config]
+levels_configs.add_level_config(
+    1,
+    lambda _: True,
+    10,
+    2,
+    8,
+    [
+        ('move', None),
+        ('move', None),
+    ]
+)
+
