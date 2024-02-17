@@ -6,7 +6,7 @@ from component.Gear.GearMouse import GearMouse
 from consts.game import SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR, FPS
 
 class Success:
-    def __init__(self, screen):
+    def __init__(self, screen, on_button_press):
         self.screen = screen
         self.background = MenuBackground(screen)
         self.mouse = GearMouse.get_instance(screen)
@@ -14,10 +14,8 @@ class Success:
                                        'Hooraaay! You did it!', 
                                        (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 
                                        text_color=(0, 200, 20),
+                                        on_click=on_button_press,
                                        hover_color=(200, 0, 200))
-
-    def set_on_button_press(self, on_button_press):
-        self.success_button.set_on_click(on_button_press)
 
     def __update(self):
         self.screen.fill(BACKGROUND_COLOR)

@@ -17,8 +17,7 @@ class Player:
         self.__robot.delay(delay_timer)
 
     def move(self):
-        self.x += 1
-        self.health -= 1
+        self.x += 2
 
     def take_damage(self, damage):
         self.health -= damage

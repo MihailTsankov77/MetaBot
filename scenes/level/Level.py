@@ -29,13 +29,13 @@ class Level:
 
     def __base_init(self):
         self.mouse = GearMouse.get_instance(self.screen)
-        self.show_success = Success(self.screen)
+        self.show_success =  Success(self.screen, lambda: print('TODO'))
         self.show_restart = Restart(self.screen)
         self._restart_timer = 0
         self._success_timer = 0
 
         self.player_health = 10
-        self.player_x = 1
+        self.player_x = 8
 
         self.robot = Robot(self.screen, tile=(self.player_x, 1), 
                            health=self.player_health, 
@@ -65,7 +65,7 @@ class Level:
         self._success_timer = 0
     
     def __on_success(self):
-        self._success_timer = SECOND
+        self._success_timer = 1
         self._restart_timer = 0
     
     def __handle_transitions(self):
@@ -79,14 +79,16 @@ class Level:
         if val > 0:
             setattr(self, transition, val - 1)
             if val - 1 == 0:
-                self.show_restart()
+                if transition == '_success_timer':
+                    self.show_success()
+                else:
+                    self.show_restart()
                 return 2
             return 1
         return 0
 
     def set_on_back(self, on_back):
         self.level.set_on_back(on_back)
-        self.show_success.set_on_button_press(on_back)
 
     def __update_entities(self):
         self.assertGate.update()

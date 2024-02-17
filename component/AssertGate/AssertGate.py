@@ -1,13 +1,13 @@
 import pygame
 
-from consts.game import FPS, GATE_SIZE, TILE_SIZE, TILE_COLUMN_COUNT
+from consts.game import SECOND, GATE_SIZE, TILE_SIZE, TILE_COLUMN_COUNT
 from images.image_loader.images import Images
 from utils.coordinates import get_coordinates_from_grid
 from utils.collision import are_colliding
 
 class AssertGate:
     size = (GATE_SIZE, GATE_SIZE)
-    timer = FPS * 3
+    timer = SECOND * 1.5
 
     def __init__(self, screen, player, check_condition, tile = (TILE_COLUMN_COUNT -1, 2), on_fail=None, on_pass=None):
         self.screen = screen
