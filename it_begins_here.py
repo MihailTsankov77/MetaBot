@@ -1,7 +1,6 @@
 import pygame
 import pygame_gui
 import sys
-# from  text_parsers.from_file_to_text.file_parser import parse_file
 
 from scenes.Main import Main
 from consts.game import SCREEN_DIMENSIONS
@@ -19,7 +18,4 @@ if __name__ == '__main__':
 
 
 # TODO fix imports
-
-# with open('text_parsers/from_file_to_text/test/TestObject.py', 'r') as file:
-#     print(parse_file(file, ['x']))
 

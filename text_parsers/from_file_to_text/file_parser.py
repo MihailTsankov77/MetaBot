@@ -23,7 +23,7 @@ def _is_visible_property(line, properties):
     return match.group(1) in properties
 
 def _is_method_visible(line):
-    is_visible_pattern = f'\s+@{Annotations.VISIBLE}'
+    is_visible_pattern = f'\s+@{Annotations.VISIBLE.value}'
     return re.match(is_visible_pattern, line)
 
 def _get_method_name(line):

@@ -1,4 +1,3 @@
-import os
 from annotations import visible
 
 class TestObject:

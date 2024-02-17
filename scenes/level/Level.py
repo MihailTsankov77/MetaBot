@@ -6,35 +6,12 @@ from component.AssertGate.AssertGate import AssertGate
 from scenes.level.LevelBase import LevelBase
 from scenes.transitions.Success import Success
 from scenes.transitions.Restart import Restart
-from levels.Player_level_1 import Player_level_1
 from consts.game import FPS, BACKGROUND_COLOR, SECOND
+from levels.levels_config import levels_configs
 
 pygame.init()
 
-# TODO 
-player_commands = [
-    ('move', None),
-    ('move', None),
-    # ('take_damage', 1),
-    # ('move', None),
-    # ('take_damage', 10),
-    # ('move', None),
-]
 
-level_config = (
-#player_code: 
-'Hello World!\n\nThis is a text box\nIt can be used to display text\nIt can also be used to display HTML\n<font color=#FF0000>Like this</font>',
-#check_condition:
-lambda robot: True,
-#player_heath: 
-10,
-#player_x: 
-2,
-#assert_gate_x: 
-8,
-#Player_class: 
-Player_level_1,
-)
 
 class Level:
     def __init__(self, screen, UI_manager):
@@ -49,16 +26,16 @@ class Level:
         self._restart_timer = 0
         self._success_timer = 0
 
-        player_code, check_condition, player_heath, player_x, assert_gate_x, Player_class = level_config
+        level_config = levels_configs[0]
 
-        self.player_health = player_heath
-        self.player_x = player_x
+        self.player_health = level_config['player_health']
+        self.player_x = level_config['player_x']
 
         self.robot = Robot(self.screen, tile=(self.player_x, 1), 
-                           health=self.player_health, 
+                           health= self.player_health, 
                            on_death = self.__on_fail)
 
-        self.player = Player_class(self.player_x, self.player_health, self.robot)
+        self.player = level_config['player_class'](self.player_x, self.player_health, self.robot)
 
         self.no_more_commands_dead_timer = None
         def on_command_finished():
@@ -66,10 +43,10 @@ class Level:
 
         self.level = LevelBase(
             self.screen, 
-            player_code,
+            level_config['player_code'],
             self.manager,
             player = self.player,
-            commands=player_commands,
+            commands= level_config['player_commands'],
             on_command_finished = on_command_finished
             )
         
@@ -78,8 +55,8 @@ class Level:
        
         self.assertGate = AssertGate(self.screen, 
                                      self.robot, 
-                                     check_condition, 
-                                     tile=(assert_gate_x, 1),
+                                     level_config['check_condition'], 
+                                     tile=(level_config['assert_gate_x'], 1),
                                      on_step = on_step_on_assert_gate,
                                      on_pass = self.__on_success,
                                      on_fail = self.__on_fail)
