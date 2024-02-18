@@ -1,4 +1,5 @@
 import pygame
+import inspect
 
 from component.Gear.GearMouse import GearMouse
 from component.Robot.Robot import Robot
@@ -49,6 +50,8 @@ class Level:
             self.manager,
             player=self.player,
             on_fail=self.__on_fail,
+            condition_text=inspect.getsource(level_config.check_condition),
+            player_health=self.player_health,
             commands=level_config.player_commands,
             on_command_finished=on_command_finished)
 

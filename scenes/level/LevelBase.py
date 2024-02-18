@@ -17,7 +17,17 @@ class LevelBase:
 
     descriptionText = "Spikes deal 1 dmg\nGoblins deal 3 dmg\nBombs deal 2 dmg"
 
-    def __init__(self, screen, code, manager, player, commands, on_fail, on_command_finished=None, player_name=PLAYER_NAME):
+    def __init__(self,
+                 screen,
+                 code,
+                 manager,
+                 player,
+                 commands,
+                 on_fail,
+                 condition_text='',
+                 player_health=-1,
+                 on_command_finished=None,
+                 player_name=PLAYER_NAME):
         self.screen = screen
         self.manager = manager
 
@@ -45,6 +55,10 @@ class LevelBase:
             manager=manager)
 
         self.description = Text(screen, self.descriptionText, (10, 0))
+        self.condition = Text(screen, condition_text,
+                              (SCREEN_WIDTH - 270, 50))
+        self.health = Text(
+            screen, f'Health: {player_health}', (SCREEN_WIDTH // 2 - 50, 20), font_size=25)
 
         self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay,
                                         on_command_finished=on_command_finished, player_name=player_name)
@@ -97,6 +111,8 @@ class LevelBase:
         self.background.update()
         self.textarea.update()
         self.description.update()
+        self.health.update()
+        self.condition.update()
         self.start_button.update()
         self.back_button.update()
 
