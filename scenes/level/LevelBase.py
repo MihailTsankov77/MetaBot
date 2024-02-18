@@ -17,14 +17,15 @@ class LevelBase:
 
     descriptionText = "Spikes deal 1 dmg\nGoblins deal 3 dmg\nBombs deal 2 dmg"
 
-    def __init__(self, screen, code, manager, player, commands, on_fail, on_command_finished = None, player_name = PLAYER_NAME):
+    def __init__(self, screen, code, manager, player, commands, on_fail, on_command_finished=None, player_name=PLAYER_NAME):
         self.screen = screen
         self.manager = manager
 
         self.grid = Grid(screen)
         self.background = LevelBackground(screen)
 
-        area_size = (SCREEN_WIDTH // 7 * 2, SCREEN_HEIGHT - self.background.height)
+        area_size = (SCREEN_WIDTH // 7 * 2,
+                     SCREEN_HEIGHT - self.background.height)
         textarea_size = (SCREEN_WIDTH - 2 * area_size[0], area_size[1])
 
         area_y = self.background.height
@@ -36,15 +37,17 @@ class LevelBase:
             html_text=code,
             relative_rect=pygame.Rect((0, area_y), area_size),
             manager=manager)
-        
+
         self.commandsTile = pygame_gui.elements.UITextBox(
             html_text='',
-            relative_rect=pygame.Rect((area_size[0] + textarea_size[0], area_y), area_size),
+            relative_rect=pygame.Rect(
+                (area_size[0] + textarea_size[0], area_y), area_size),
             manager=manager)
-        
+
         self.description = Text(screen, self.descriptionText, (10, 0))
 
-        self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay, on_command_finished=on_command_finished, player_name=player_name)
+        self.turn_manager = TurnManager(player, self.set_commands, commands, delay_player=player._set_delay,
+                                        on_command_finished=on_command_finished, player_name=player_name)
 
         player._set_on_action_finished(self.turn_manager.next_turn)
 
@@ -52,17 +55,19 @@ class LevelBase:
         self.player_name = player_name
         self.__on_fail = on_fail
 
-        self.start_button = GearButton(screen, 200, (SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100), self.__on_start)
+        self.start_button = GearButton(
+            screen, 200, (SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100), self.__on_start)
         self.__is_started = False
 
-        self.back_button = TextButton(screen, 'BACK', (SCREEN_WIDTH - 50, 20), font_size=20, hover_color=(0, 200, 20))
+        self.back_button = TextButton(
+            screen, 'BACK', (SCREEN_WIDTH - 50, 20), font_size=20, hover_color=(0, 200, 20))
 
     def set_on_back(self, on_back):
         self.back_button.set_on_click(on_back)
 
     def __handle_text_to_code(self):
         try:
-            to_code(self.get_code(), {self.player_name: self.player})   
+            to_code(self.get_code(), {self.player_name: self.player})
             return True
         except Exception as e:
             print(e)
@@ -72,19 +77,18 @@ class LevelBase:
     def __on_start(self):
         if self.__is_started:
             return
-        
+
         if not self.__handle_text_to_code():
             return
         self.__is_started = True
         self.turn_manager.next_turn()
-
 
     def handle_input(self, event):
         self.textarea.handle_input(event)
 
     def get_code(self):
         return self.textarea.get_text()
-    
+
     def set_commands(self, commands):
         self.commandsTile.set_text(commands)
 

@@ -1,7 +1,9 @@
 from enum import Enum
 
+
 class Annotations(Enum):
     VISIBLE = 'visible'
+
 
 def annotation_func(func):
     def wrapper(*args, **kwargs):
@@ -11,4 +13,3 @@ def annotation_func(func):
 
 for annotation in Annotations:
     globals()[annotation.value] = annotation_func
-

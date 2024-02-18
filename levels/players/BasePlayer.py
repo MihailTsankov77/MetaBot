@@ -3,7 +3,7 @@ class BasePlayer:
     def __init__(self, x, health, robot):
         self.x = x
         self.__x = x
-        
+
         self.health = health
         self.__health = health
 
@@ -12,7 +12,7 @@ class BasePlayer:
 
     def _set_on_action_finished(self, on_action_finished):
         self.__robot.on_action_finished = on_action_finished
-    
+
     def _set_delay(self, delay_timer):
         self.__robot.delay(delay_timer)
 
@@ -31,6 +31,7 @@ class BasePlayer:
             self.robot_in_action = True
             self.__robot.take_damage(damage_taken_this_turn)
 
-        self.__robot.set_in_action(self.robot_in_action or self._trigger_action)
+        self.__robot.set_in_action(
+            self.robot_in_action or self._trigger_action)
         self._trigger_action = False
         self.__robot.update()

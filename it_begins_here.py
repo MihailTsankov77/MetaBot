@@ -15,7 +15,3 @@ if __name__ == '__main__':
     Main(screen, manager)()
     pygame.quit()
     sys.exit(0)
-
-
-# TODO fix imports
-

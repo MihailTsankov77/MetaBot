@@ -1,15 +1,16 @@
 import pygame
 
+
 class ButtonBase:
 
-    def __init__(self, screen, component, on_click = None, on_hover=None, on_unHover=None):
+    def __init__(self, screen, component, on_click=None, on_hover=None, on_unHover=None):
         self.component = component
         self.on_click = on_click
         self.screen = screen
         self.on_hover = on_hover
         self.on_unHover = on_unHover
         self.clicked = False
-    
+
     def update(self):
         if self.on_click is None:
             return
@@ -29,5 +30,5 @@ class ButtonBase:
 
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
-        
+
         self.component.update()

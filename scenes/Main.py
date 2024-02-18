@@ -2,6 +2,7 @@ from scenes.level.Level import Level
 from scenes.menu.Menu import Menu
 from scenes.menu.ChooseLevel import ChooseLevel
 
+
 class Main:
     def __init__(self, screen, manager):
         self.screen = screen

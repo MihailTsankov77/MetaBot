@@ -18,5 +18,4 @@ class Player_level_2(BasePlayer):
 
     @visible
     def _move(self):
-        self.x += floor(self.distance) # TODO fix this
-    
+        self.x += floor(self.distance)

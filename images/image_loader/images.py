@@ -1,5 +1,6 @@
 import pygame
 
+
 class Images_Loader:
     path = "images/assets/"
     assets = {
@@ -23,15 +24,17 @@ class Images_Loader:
             "asset": "menu_background.png",
             "is_image": True
         },
-        "Gate":{
+        "Gate": {
             "asset": "gate.png",
             "is_image": True
         },
     }
+
     def __init__(self):
-       for name, config in self.assets.items():
+        for name, config in self.assets.items():
             if config['is_image']:
-                setattr(self, name, pygame.image.load(self.path + config['asset']))
+                setattr(self, name, pygame.image.load(
+                    self.path + config['asset']))
             else:
                 setattr(self, name, self.load_sprite_sheet(config))
 
@@ -45,11 +48,11 @@ class Images_Loader:
         frames = []
         for i in range(rows):
             for j in range(columns):
-                frames.append(sprite_sheet.subsurface((size[0] * j, size[1] * i, size[0], size[1])))
+                frames.append(sprite_sheet.subsurface(
+                    (size[0] * j, size[1] * i, size[0], size[1])))
                 if len(frames) == all_frames:
                     break
         return frames
-
 
 
 Images = Images_Loader()

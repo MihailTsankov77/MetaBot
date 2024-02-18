@@ -10,15 +10,16 @@ from consts.game import FPS, BACKGROUND_COLOR, SECOND
 from levels.levels_config import levels_configs
 from file_manager.SaveProgress import SaveProgress
 
+
 class Level:
     def __init__(self, screen, UI_manager):
         self.screen = screen
-        self.manager = UI_manager 
+        self.manager = UI_manager
         self.on_back = None
 
     def __base_init(self, level):
         self.mouse = GearMouse.get_instance(self.screen)
-        self.show_success =  Success(self.screen, self.on_back)
+        self.show_success = Success(self.screen, self.on_back)
         self.show_restart = Restart(self.screen)
         self._restart_timer = 0
         self._success_timer = 0
@@ -28,58 +29,59 @@ class Level:
         self.player_health = level_config.player_health
         self.player_x = level_config.player_x
 
-        self.robot = Robot(self.screen, tile=(self.player_x, 1), 
-                           health= self.player_health, 
-                           on_death = self.__on_fail)
+        self.robot = Robot(self.screen, tile=(self.player_x, 1),
+                           health=self.player_health,
+                           on_death=self.__on_fail)
 
-        self.player = level_config.player_class(self.player_x, self.player_health, self.robot)
+        self.player = level_config.player_class(
+            self.player_x, self.player_health, self.robot)
 
         self.no_more_commands_dead_timer = None
         self.run_out_of_commands = False
+
         def on_command_finished():
             self.no_more_commands_dead_timer = 2 * SECOND
             self.run_out_of_commands = True
 
         self.level = LevelBase(
-            self.screen, 
+            self.screen,
             level_config.player_code,
             self.manager,
-            player = self.player,
+            player=self.player,
             on_fail=self.__on_fail,
-            commands= level_config.player_commands,
-            on_command_finished = on_command_finished)
-        
+            commands=level_config.player_commands,
+            on_command_finished=on_command_finished)
+
         self.level.set_on_back(self.on_back)
-        
+
         def on_step_on_assert_gate():
             self.no_more_commands_dead_timer = None
 
         def gate_condition(robot):
             return self.run_out_of_commands and level_config.check_condition(robot)
-       
-        self.assertGate = AssertGate(self.screen, 
-                                     self.robot, 
-                                     gate_condition, 
-                                     tile=(level_config.assert_gate_x, 1),
-                                     on_step = on_step_on_assert_gate,
-                                     on_pass = self.__on_success,
-                                     on_fail = self.__on_fail)
 
+        self.assertGate = AssertGate(self.screen,
+                                     self.robot,
+                                     gate_condition,
+                                     tile=(level_config.assert_gate_x, 1),
+                                     on_step=on_step_on_assert_gate,
+                                     on_pass=self.__on_success,
+                                     on_fail=self.__on_fail)
 
     def __on_fail(self):
         self._restart_timer = SECOND
         self._success_timer = 0
-    
+
     def __on_success(self):
         self._success_timer = 1
         self._restart_timer = 0
-    
+
     def __handle_transitions(self):
         ans = self.__handle_transition('_restart_timer')
         if ans != 0:
             return ans
-        return self.__handle_transition('_success_timer')        
-    
+        return self.__handle_transition('_success_timer')
+
     def __handle_transition(self, transition):
         val = getattr(self, transition)
         if val > 0:
@@ -92,7 +94,7 @@ class Level:
                 return 2
             return 1
         return 0
-    
+
     def set_on_back(self, on_back):
         self.on_back = on_back
 
@@ -112,7 +114,6 @@ class Level:
         self.manager.update(time_delta)
         pygame.display.update()
 
-
     def __init(self):
         clock = pygame.time.Clock()
 
@@ -125,10 +126,10 @@ class Level:
 
                 self.level.handle_input(event)
                 self.manager.process_events(event)
-            
+
             if self.__handle_transitions() == 2:
                 return
-            
+
             self.level.update()
             self.__update_entities()
             self.__update(time_delta)
@@ -137,6 +138,5 @@ class Level:
         self.screen.fill(BACKGROUND_COLOR)
         self.__base_init(level)
         self.show_restart.set_on_button_press(lambda: self.__call__(level))
-        SaveProgress().save_level(level) # TODO fix 
+        SaveProgress().save_level(level)  # TODO fix
         self.__init()
-              

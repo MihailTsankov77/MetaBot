@@ -1,13 +1,14 @@
 from text_parsers.commands.commands_string_builder import build_commands_string
 from consts.game import PLAYER_NAME, SECOND
 
+
 class TurnManager:
-    def __init__(self, player, 
-                 update_commands, 
-                 commands, 
-                 player_name = PLAYER_NAME, 
-                 delay_player = None,
-                 on_command_finished = None):
+    def __init__(self, player,
+                 update_commands,
+                 commands,
+                 player_name=PLAYER_NAME,
+                 delay_player=None,
+                 on_command_finished=None):
         self.player = player
         self.commands = commands
         self.update_commands = update_commands
@@ -15,18 +16,18 @@ class TurnManager:
         self.player_name = player_name
         self.delay_player = delay_player
         self.on_command_finished = on_command_finished
-        
+
         self.__update_commands()
 
     @property
     def __commands_text(self):
         return build_commands_string(self.commands, self.player_name, self.current_command)
-    
+
     def __update_commands(self):
         self.update_commands(self.__commands_text)
-    
+
     def __execute_command(self):
-        self.current_command += 1    
+        self.current_command += 1
         self.__update_commands()
 
         if self.current_command >= len(self.commands):
@@ -49,6 +50,3 @@ class TurnManager:
             self.delay_player(SECOND)
 
         self.__execute_command()
-
-
-

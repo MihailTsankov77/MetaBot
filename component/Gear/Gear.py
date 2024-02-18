@@ -1,11 +1,11 @@
 import pygame
 from images.image_loader.images import Images
 
-# TODO make the gear smaller hitbox
+
 class Gear:
     def __init__(self, screen, size, position):
         self.screen = screen
-        self.original_image =  pygame.transform.scale(Images.Gear, (size, size))
+        self.original_image = pygame.transform.scale(Images.Gear, (size, size))
         self.image = self.original_image
         self.rect = self.image.get_rect()
 
@@ -15,7 +15,8 @@ class Gear:
     def rotate(self, speed=1):
         self.angle += speed
 
-        rotated_image = pygame.transform.rotate(self.original_image, self.angle%360)
+        rotated_image = pygame.transform.rotate(
+            self.original_image, self.angle % 360)
         new_rect = rotated_image.get_rect(center=self.rect.center)
 
         self.image = rotated_image

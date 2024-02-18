@@ -2,7 +2,7 @@ import pygame
 
 from component.Gear.Gear import Gear
 
-  
+
 class GearMouse:
     __instance = None
 
