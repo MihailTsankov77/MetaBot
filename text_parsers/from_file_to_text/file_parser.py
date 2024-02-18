@@ -11,8 +11,8 @@ def _find_class(line):
 
 
 def _is_property(line):
-    method_pattern = r'\s+def\s+\w+'
-    return not re.match(method_pattern, line)
+    method_pattern = r'\s+(\w+)\s+='
+    return re.match(method_pattern, line)
 
 
 def _is_visible_property(line, properties):
@@ -27,7 +27,7 @@ def _is_method_visible(line):
     return re.match(is_visible_pattern, line)
 
 def _get_method_name(line):
-    is_public_pattern = r'\s+def\s+(.+)\('
+    is_public_pattern = r'\s*def\s+(.+?)\s*\('
     return re.match(is_public_pattern, line).group(1)
 
 def _is_private_method(name):
