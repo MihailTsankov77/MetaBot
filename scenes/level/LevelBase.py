@@ -56,7 +56,7 @@ class LevelBase:
 
         self.description = Text(screen, self.descriptionText, (10, 0))
         self.condition = Text(screen, condition_text,
-                              (SCREEN_WIDTH - 270, 50))
+                              (SCREEN_WIDTH - 270, 70), font_size=15)
         self.health = Text(
             screen, f'Health: {player_health}', (SCREEN_WIDTH // 2 - 50, 20), font_size=25)
 

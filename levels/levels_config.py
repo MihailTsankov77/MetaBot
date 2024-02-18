@@ -49,7 +49,7 @@ levels_configs.add_level_config(
 levels_configs.add_level_config(
     2,
     lambda _: True,
-    1, 10,
+    1, 1,
     8,
     [
         ('change_distance', None),
@@ -57,6 +57,20 @@ levels_configs.add_level_config(
         ('change_distance', None),
         ('_move', None),
         ('change_distance', None),
+        ('_move', None),
+    ]
+)
+
+levels_configs.add_level_config(
+    3,
+    lambda robot: robot.health == 10,
+    2, 10,
+    8,
+    [
+        ('_move', None),
+        ('take_damage', (30)),
+        ('_move', None),
+        ('take_damage', (999)),
         ('_move', None),
     ]
 )
