@@ -2,8 +2,8 @@ import re
 from text_parsers.from_text_to_code.PlayerDieException import PlayerDieException
 
 def _check_has_code_privates(text):
-    pattern1 = r'\.\s*_+[a-zA-Z]\w*'
-    pattern2 = r'\'\s*_+[a-zA-Z]\w*'
+    pattern1 = r'\.\s*_+[a-zA-Z].*'
+    pattern2 = r'\'\s*_+[a-zA-Z].*'
     return re.search(pattern1, text) or re.search(pattern2, text)
 
 
@@ -13,7 +13,7 @@ def _check_has_code_classes(text):
 
 
 def _check_code_for_bs(text):
-    patterns = [r'\.*globals()\.*', r'\.*locals()\.*', r'\.*exec()\.*', r'\.*__dict__\.*']
+    patterns = [r'\.*globals()\.*', r'\.*locals()\.*', r'\bfork\b', r'\bexec\b', r'\.?__dict__\.?']
     for pattern in patterns:
         if re.search(pattern, text):
             return True
