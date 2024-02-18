@@ -8,6 +8,11 @@ class Player_level_1(BasePlayer):
         super().__init__(x, health, robot)
         self.x = x
 
+    def __getattribute__(self, __name):
+        if __name == 'move':
+            self._trigger_action = True
+        return super().__getattribute__(__name)
+
     def _sync(self):
         self._base_x = self.x
 

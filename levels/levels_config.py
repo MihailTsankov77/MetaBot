@@ -29,6 +29,8 @@ class __LevelsConfigs:
             level, check_condition, player_health, player_x, assert_gate_x, player_commands))
 
     def get_level_config(self, level):
+        if level > len(self.levels_configs):
+            return self.levels_configs[len(self.levels_configs) - 1]
         return self.levels_configs[level - 1]
 
 

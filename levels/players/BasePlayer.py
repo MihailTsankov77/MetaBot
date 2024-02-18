@@ -24,19 +24,15 @@ class BasePlayer:
 
         moved_this_turn = self._base_x - self.__base_original_x
         self.__base_original_x = self._base_x
-        self.robot_in_action = False
 
         if moved_this_turn:
-            self.robot_in_action = True
             self.__robot.move_tile(moved_this_turn)
 
         damage_taken_this_turn = self.__base_original_health - self._base_health
         self.__base_original_health = self._base_health
         if damage_taken_this_turn:
-            self.robot_in_action = True
             self.__robot.take_damage(damage_taken_this_turn)
 
-        self.__robot.set_in_action(
-            self.robot_in_action or self._trigger_action)
+        self.__robot.set_in_action(self._trigger_action)
         self._trigger_action = False
         self.__robot.update()

@@ -14,7 +14,7 @@ class Player_level_2(BasePlayer):
         self._base_x = self._x
 
     def __getattribute__(self, __name):
-        if __name == 'change_distance':
+        if __name == 'change_distance' or __name == '_move':
             self._trigger_action = True
         return super().__getattribute__(__name)
 

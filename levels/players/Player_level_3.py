@@ -11,7 +11,7 @@ class Player_level_3(BasePlayer):
         self.health = health
 
     def __getattribute__(self, __name):
-        if __name == 'take_damage':
+        if __name == 'take_damage' or __name == '_move':
             self._trigger_action = True
         return super().__getattribute__(__name)
 
