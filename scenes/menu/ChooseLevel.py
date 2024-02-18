@@ -1,7 +1,5 @@
 import pygame
 
-from file_manager.SaveProgress import SaveProgress
-
 from component.backgrounds.MenuBackground import MenuBackground
 from component.buttons.TextButton import TextButton
 from component.Gear.GearMouse import GearMouse
@@ -52,7 +50,7 @@ class ChooseLevel:
 
     def __call__(self):
         self.screen.fill(BACKGROUND_COLOR)
-        completed_levels = [] #SaveProgress('..../').get_completed_levels() # TODO fix path
+        completed_levels = [] #SaveProgress().get_completed_levels() # TODO fix path
         for i in completed_levels:
             self.level_texts[i - 1].set_color((0, 255, 0))
 

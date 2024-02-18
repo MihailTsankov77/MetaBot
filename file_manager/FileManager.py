@@ -18,11 +18,11 @@ class FileManager:
     def __init__(self):
         for type_text in self.type_texts:
             path = f'{self.base_path}{type_text}.txt'
-            def __write_file(path_to_base, text_data):
-                _write_file(f'{path_to_base}{path}', text_data)
+            def __write_file(text_data):
+                _write_file(path, text_data)
             setattr(self, f'{type_text}_write', __write_file)
 
-            def __read_file(path_to_base):
-                with open(f'{path_to_base}{path}', 'r') as file:
+            def __read_file():
+                with open(path, 'r') as file:
                     return file.read()
             setattr(self, f'{type_text}_read', __read_file)

@@ -8,8 +8,7 @@ from scenes.transitions.Success import Success
 from scenes.transitions.Restart import Restart
 from consts.game import FPS, BACKGROUND_COLOR, SECOND
 from levels.levels_config import levels_configs
-
-pygame.init()
+from file_manager.SaveProgress import SaveProgress
 
 class Level:
     def __init__(self, screen, UI_manager):
@@ -138,5 +137,6 @@ class Level:
         self.screen.fill(BACKGROUND_COLOR)
         self.__base_init(level)
         self.show_restart.set_on_button_press(lambda: self.__call__(level))
+        SaveProgress().save_level(level) # TODO fix 
         self.__init()
               
