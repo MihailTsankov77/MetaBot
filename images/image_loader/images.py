@@ -28,6 +28,10 @@ class Images_Loader:
             "asset": "gate.png",
             "is_image": True
         },
+        "Spikes": {
+            "asset": "spikes.png",
+            "is_image": True
+        },
     }
 
     def __init__(self):
