@@ -20,7 +20,7 @@ class ChooseLevel:
                            f'Level {i + 1}',
                            (i % 5 * 150 + 300, i // 5 *
                             100 + SCREEN_HEIGHT // 2 - 100),
-                           self.start_level if i < 3 else print,
+                           self.start_level if i < 4 else print,
                            param=i + 1,
                            font_size=30,
                            hover_color=(200, 0, 200)))

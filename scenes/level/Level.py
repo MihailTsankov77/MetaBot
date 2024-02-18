@@ -71,6 +71,11 @@ class Level:
                                      on_pass=self.__on_success,
                                      on_fail=self.__on_fail)
 
+        self.monsters = []
+        for monster in level_config.monsters:
+            self.monsters.append(monster['class'](
+                self.screen, monster['position'], self.robot))
+
     def __on_fail(self):
         self._restart_timer = SECOND
         self._success_timer = 0
@@ -110,6 +115,9 @@ class Level:
     def __update_entities(self):
         self.assertGate.update()
         self.player._update()
+
+        for monster in self.monsters:
+            monster.update()
 
     def __update(self, time_delta):
         self.__handle_end()

@@ -83,7 +83,7 @@ def parse_file(file, properties=None):
 
         if _is_property(line):
             if _is_visible_property(line, properties):
-                text += line + '\n'
+                text += line
                 continue
 
         if _is_method_visible(line):
