@@ -20,7 +20,7 @@ class ButtonBase:
         if self.component.rect.collidepoint(pos):
             if self.on_hover is not None:
                 self.on_hover()
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+            if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:
                 self.clicked = True
                 if self.on_click is not None:
                     self.on_click()
